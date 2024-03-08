@@ -24,10 +24,8 @@ function passwordGenerator(data) {
             }
         }
     }
-    console.log(`${concatString.reverse().join('')}`);
-    console.log('SIytsDrtDtEbBtRUqtTnSnIsDhttDEbBRrUsTSyIrD');
+    console.log(`Your generated password is ${concatString.reverse().join('')}`);
 }
 passwordGenerator([
-    'areyousureaboutthisone', 'notquitebutitrustyou', 'disturbed'
-    ]
-    );
+    'easymoneyeazylife', 'atleasttencharacters', 'absolute'
+]);
