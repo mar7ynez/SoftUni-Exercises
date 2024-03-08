@@ -12,23 +12,22 @@ function passwordGenerator(data) {
         let index = 0;
 
         for (let curChar of concatString) {
-            for (let vowel of vowels) {
-                if (vowel === curChar.toLowerCase()) {
-                    concatString.splice(concatString.indexOf(curChar), 1, theWord[index]);
-                    index++;
+            if (vowels.includes(curChar)) {
+                concatString.splice(concatString.indexOf(curChar), 1, theWord[index]);
+                index++;
 
-                    if (index >= theWord.length) {
-                        index = 0;
-                        break;
+                if (index >= theWord.length) {
+                    index = 0;
+                    break;
 
-                    }
                 }
             }
         }
     }
-    console.log(`Your generated password is ${concatString.reverse().join('')}`);
+    console.log(`${concatString.reverse().join('')}`);
+    console.log('SIytsDrtDtEbBtRUqtTnSnIsDhttDEbBRrUsTSyIrD');
 }
 passwordGenerator([
-    'easymoneyeazylife', 'atleasttencharacters', 'absolute'
-]
-);
+    'areyousureaboutthisone', 'notquitebutitrustyou', 'disturbed'
+    ]
+    );
