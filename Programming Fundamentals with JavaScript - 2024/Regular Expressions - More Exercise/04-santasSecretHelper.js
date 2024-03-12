@@ -2,7 +2,7 @@ function santasSecretHelper(data) {
 
     let encryptionKey = data.shift();
     let message = data.shift();
-    let pattern = /@([A-Z][a-z]+)[^@\-!:>]*!([GN])!/g;
+    let pattern = /@([A-Za-z]+)[^@\-!:>]*!([GN])!/g;
     let decryptedMessage = [];
 
     while (message !== 'end') {
