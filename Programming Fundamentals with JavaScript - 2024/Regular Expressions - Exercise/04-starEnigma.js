@@ -1,24 +1,30 @@
 function starEnigma(data) {
 
-    let messageCount = data.shift();
+    let messageCount = Number(data.shift());
     let keysPattern = /[star]/gi;
-    let messagePattern = /@([A-Za-z]+)[^@\-!:>]*?:(\d+)[^@\-!:>]*?!([AD])![^@\-!:>]*?->(\d+)/g;
-
+    let messagePattern = /@([A-Za-z]+)[^@\-!:>]*:(\d+)[^@\-!:>]*!([A|D])![^@\-!:>]*->(\d+)/g;
     let planetRegister = { attacked: [], destroyed: [] };
 
     data.forEach(curMessage => {
-        let validKeys = curMessage.match(keysPattern)
+        let validKeys = curMessage.match(keysPattern);
         let asciiStorage = [];
+        let decreasedBy = 0;
+
+        if (validKeys) {
+            decreasedBy = validKeys.length;
+
+        }
 
         for (let curChar of curMessage) {
-            asciiStorage.push(String.fromCharCode(curChar.charCodeAt() - validKeys.length));
+            asciiStorage.push(String.fromCharCode(curChar.charCodeAt(0) - decreasedBy));
 
         }
         let curPlanet = asciiStorage.join('');
         let validPlanets = curPlanet.matchAll(messagePattern);
 
         for (let match of validPlanets) {
-            let [message, planetName, population, atackType, soldierCount] = match;
+            let planetName = match[1];
+            let atackType = match[3];
             switch (atackType) {
                 case 'A':
                     planetRegister.attacked.push(planetName); break;
@@ -36,7 +42,6 @@ function starEnigma(data) {
     console.log(`Destroyed planets: ${planetRegister.destroyed.length}`);
     planetRegister.destroyed.forEach(p => console.log(`-> ${p}`));
 }
-starEnigma(['3',
-    "tt(''DGsvywgerx>6444444444%H%1B9444",
-    'GQhrr|A977777(H(TTTT',
+starEnigma(['2',
+    'STCDoghudd4=63333$D$0A53333',
     'EHfsytsnhf?8555&I&2C9555SR']);
