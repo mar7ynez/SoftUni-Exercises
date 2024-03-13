@@ -1,47 +1,52 @@
 function postOffice(data) {
 
-    let randomString = data.split('|');
+    let randomString = String(data).split('|');
     let capitalLettersPart = randomString.shift();
     let asciiAndWordLength = randomString.shift();
     let allTheWords = randomString.shift().split(' ');
 
     let capLettersPatern = /([#$%*&])([A-Z]+)\1/g;
     let codeAndWordLengthPattern = /(\d+:\d{2})/g;
-    //let wordsPattern = /\s[A-Z][\S]+/g;
-    
+
     let capitalLettersMatch;
-    let asciiCodeAndLengthStorage = {};
-    let matchAsciiAndLength = asciiAndWordLength.match(codeAndWordLengthPattern);
-    
+    let asciiCodeAndLengthStorage = new Map();
+
     while (capitalLettersMatch = capLettersPatern.exec(capitalLettersPart)) {
+        let matchAsciiAndLength;
         let capLetters = capitalLettersMatch[2];
-    
+
         for (let curLetter of capLetters) {
-            for (let asciiAndLength of matchAsciiAndLength) {
-                let [asciiCode, wordLength] = asciiAndLength.split(':');
+            asciiCodeAndLengthStorage.set(curLetter, 0);
+
+            while (matchAsciiAndLength = codeAndWordLengthPattern.exec(asciiAndWordLength)) {
+                let [asciiCode, wordLength] = matchAsciiAndLength[1].split(':');
                 let wordLengthFix = wordLength.replace(/^0+/, '');
+                let asciiCodeString = String.fromCharCode(asciiCode);
 
-                if (curLetter.charCodeAt() !== Number(asciiCode)) {
+                if (curLetter !== asciiCodeString) {
                     continue;
 
-                } else if (!asciiCodeAndLengthStorage.hasOwnProperty(asciiCode)) {
-                    asciiCodeAndLengthStorage[asciiCode] = Number(wordLengthFix);
-                    continue;
+                } else if (asciiCodeAndLengthStorage.has(asciiCodeString)) {
+                    asciiCodeAndLengthStorage.set(asciiCodeString, Number(wordLengthFix));
+                    break;
 
                 }
             }
         }
-    }
+        let index = 0;
 
-    for (let curWord of allTheWords) {
-        if (!asciiCodeAndLengthStorage.hasOwnProperty(curWord[0].charCodeAt())) {
-            continue;
-            
-        }
-        if (curWord.length - asciiCodeAndLengthStorage[curWord[0].charCodeAt()] === 1) {
-            console.log(curWord);
-            continue;
+        for (let curWord of allTheWords) {
+            let capLetters = capitalLettersMatch[2];
+            if (!asciiCodeAndLengthStorage.has(curWord[0])) {
+                continue;
 
+            }
+            if (capLetters[index] === curWord[0] && curWord.length - 1 === asciiCodeAndLengthStorage.get(capLetters[index])) {
+                index++;
+                console.log(curWord);
+                continue;
+
+            }
         }
     }
 }
