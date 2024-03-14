@@ -17,31 +17,28 @@ function plantDiscovery(data) {
             let [, plant, , rating] = command.split(' ');
             if (!plantRegister.hasOwnProperty(plant)) {
                 console.log('error');
-
-            } else {
-                plantRegister[plant].rate.push(rating)
+                continue;
 
             }
+            plantRegister[plant].rate.push(rating)
 
         } else if (command.includes('Update')) {
             let [, plant, , newRarity] = command.split(' ');
             if (!plantRegister.hasOwnProperty(plant)) {
                 console.log('error');
-
-            } else {
-                plantRegister[plant].rarity = newRarity;
+                continue;
 
             }
+            plantRegister[plant].rarity = newRarity;
 
         } else {
             let [, plant] = command.split(' ');
             if (!plantRegister.hasOwnProperty(plant)) {
                 console.log('error');
-
-            } else {
-                plantRegister[plant].rate = [];
+                continue;
 
             }
+            plantRegister[plant].rate = [];
         }
     }
     console.log(`Plants for the exhibition:`);
