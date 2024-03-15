@@ -1,10 +1,10 @@
 function triangleArea(a, b, c) {
 
-    let area = 1 / 4 * Math.sqrt(4 * a ** 2 * b ** 2 - (a ** 2 + b ** 2 - c ** 2) ** 2);
-
+    let side = (a + b + c) / 2;
+    let area = Math.sqrt(side * (side - a) * (side - b) * (side - c));
     console.log(area);
-}
 
+}
 triangleArea(3,
     5.5,
     4);
