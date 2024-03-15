@@ -14,7 +14,7 @@ function arrayManipulator(arrOfInt, arrOfCommands) {
             for (let i = 0; i < curManipulation.length; i++) {
                 arrOfInt.splice(index, 0, curManipulation[i]);
                 index++;
-                
+
             }
 
         } else if (command === 'remove') {
@@ -22,10 +22,15 @@ function arrayManipulator(arrOfInt, arrOfCommands) {
             arrOfInt.splice(index, 1);
 
         } else if (command === 'contains') {
-            let element = Number(curManipulation.shift());
-            let index = arrOfInt.indexOf(element);
+            let element = curManipulation.shift();
+            if (arrOfInt.indexOf(element) !== -1 && !isNaN(element)) {
+                console.log(arrOfInt.indexOf(element));
 
-            console.log(index);
+            } else {
+                element = Number(element);
+                console.log(arrOfInt.indexOf(element));
+
+            }
 
         } else if (command === 'shift') {
             let rotations = Number(curManipulation.shift())
@@ -51,9 +56,10 @@ function arrayManipulator(arrOfInt, arrOfCommands) {
 
         } else if (command === 'print') {
             console.log(`[ ${arrOfInt.join(', ')} ]`);
+            break;
 
         }
     }
 }
-arrayManipulator([1, 2, 3, 4, 5],
-    ['addMany 5 9 8 7 6 5', 'contains 15', 'remove 3', 'shift 1', 'print']);
+arrayManipulator([1, 2, 4, 5, 6, 7],
+    ['add 1 8', 'contains 1', 'contains 3', 'print']);
