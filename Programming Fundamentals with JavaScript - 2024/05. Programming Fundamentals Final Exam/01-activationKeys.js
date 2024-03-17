@@ -22,7 +22,6 @@ function activationKeys(data) {
         command = data.shift();
     }
     console.log(`Your activation key is: ${rawKey}`);
-    console.log(`Your activation key is: 134SF5ftuni2020rockz42`);
 
     function contains(rawKey, substr) {
         if (rawKey.includes(substr)) {
@@ -48,7 +47,6 @@ function activationKeys(data) {
         rawKey = keyArr.join('');
         return rawKey
     }
-
 }
 activationKeys((["134softsf5ftuni2020rockz42",
 "Slice>>>3>>>7",
