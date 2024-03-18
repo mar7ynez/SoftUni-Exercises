@@ -16,10 +16,10 @@ function heroesOfCodeAndLogic(data) {
 
         if (heroesRegister.hasOwnProperty(heroName)) {
             if (action === 'Heal') {
-                console.log(healing(heroName, amount));
+                console.log(recharge(action, heroName, amount));
 
             } else if (action === 'Recharge') {
-                console.log(rechargeMp(heroName, amount));
+                console.log(recharge(action, heroName, amount));
 
             } else if (action === 'TakeDamage') {
                 console.log(takeDamage(heroName, amount, attacker));
@@ -57,20 +57,19 @@ function heroesOfCodeAndLogic(data) {
         return `${heroName} has been killed by ${attacker}!`
     }
 
-    function rechargeMp(heroName, amount) {
+    function recharge(action, heroName, amount) {
         let amountRecovered = 0;
-        if (heroesRegister[heroName].mp + Number(amount) > 200) {
-            amountRecovered = (200 + Number(amount)) - (heroesRegister[heroName].mp + Number(amount));
-            heroesRegister[heroName].mp = 200;
-            return `${heroName} recharged for ${amountRecovered} MP!`;
+        if (action !== 'Heal') {
+            if (heroesRegister[heroName].mp + Number(amount) > 200) {
+                amountRecovered = (200 + Number(amount)) - (heroesRegister[heroName].mp + Number(amount));
+                heroesRegister[heroName].mp = 200;
+                return `${heroName} recharged for ${amountRecovered} MP!`;
 
+            }
+            heroesRegister[heroName].mp += Number(amount);
+            return `${heroName} recharged for ${Number(amount)} MP!`;
         }
-        heroesRegister[heroName].mp += Number(amount);
-        return `${heroName} recharged for ${Number(amount)} MP!`;
-    }
-
-    function healing(heroName, amount) {
-        let amountRecovered = 0;
+        
         if (heroesRegister[heroName].hp + Number(amount) > 100) {
             amountRecovered = (100 + Number(amount)) - (heroesRegister[heroName].hp + Number(amount));
             heroesRegister[heroName].hp = 100;
