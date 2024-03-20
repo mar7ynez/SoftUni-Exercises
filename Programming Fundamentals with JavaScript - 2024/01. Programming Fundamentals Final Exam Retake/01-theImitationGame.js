@@ -1,29 +1,29 @@
 function theImitationGame(data) {
 
-    let encryptedMessage = data.shift().split('');
+    let encryptedMessage = data.shift();
     let command = data.shift();
 
     while (command !== 'Decode') {
         let [action, valueOne, valueTwo] = command.split('|');
 
         if (action === "Move") {
-            for (let i = 0; i < valueOne; i++) {
-                let letters = encryptedMessage.shift();
-                encryptedMessage.push(letters);
-            }
+            let letters = encryptedMessage.substring(0, Number(valueOne));
+            encryptedMessage = encryptedMessage.replace(letters, '');
+            encryptedMessage += letters;
 
         } else if (action === 'Insert') {
-            encryptedMessage.splice(valueOne, 0, valueTwo);
+            encryptedMessage = encryptedMessage.split('');
+            encryptedMessage.splice(Number(valueOne), 0, valueTwo);
+            encryptedMessage = encryptedMessage.join('');
 
         } else {
             while (encryptedMessage.includes(valueOne)) {
-                let occurenceIndex = encryptedMessage.indexOf(valueOne);
-                encryptedMessage.splice(occurenceIndex, 1, valueTwo);
+                encryptedMessage = encryptedMessage.replace(valueOne, valueTwo)
             }
         }
         command = data.shift();
     }
-    console.log(`The decrypted message is: ${encryptedMessage.join('')}`);
+    console.log(`The decrypted message is: ${encryptedMessage}`);
 }
 theImitationGame([
     'zzHe',
