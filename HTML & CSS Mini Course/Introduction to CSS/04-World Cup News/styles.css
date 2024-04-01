@@ -1,0 +1,35 @@
+main {
+    background: #ABE8F3;
+    border: 1px solid black;
+    max-width: 720px;
+    padding-bottom: 40px;
+}
+
+p,
+h2,
+h1 {
+    margin-left: 20px;
+}
+
+p span {
+    font-style: italic;
+}
+
+article {
+    max-width: 590px;
+    border: 1px solid black;
+    padding: 10px;
+    margin-left: 55px;
+    margin-bottom: 3px;
+}
+
+article img,
+article span {
+    display: inline-block;
+    vertical-align: middle;
+}
+article span {
+    margin-left: 10px;
+    color: #313BB3;
+    font-weight: bold;
+}
