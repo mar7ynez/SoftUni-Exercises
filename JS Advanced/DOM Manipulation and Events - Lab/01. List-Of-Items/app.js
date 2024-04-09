@@ -5,5 +5,5 @@ function addItem() {
     let liElement = document.createElement('li');
     liElement.textContent = inputElement.value;
 
-    itemsElement.appendChild('liElement');
+    itemsElement.appendChild(liElement);
 }
