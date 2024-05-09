@@ -39,6 +39,8 @@ function solve() {
       newTrElement.appendChild(decoFragment);
       newTrElement.appendChild(checkBoxFragment);
       tableBodyElement.appendChild(newTrElement);
+
+      textAreaElements[0].value = '';
     });
   }
 
@@ -57,9 +59,9 @@ function solve() {
         avgDecFactor += decFactorVal;
       }
     }
-    textAreaElements[1].value += `Bought furniture: ${products.join(', ')}\n`;
+    textAreaElements[1].value = `Bought furniture: ${products.join(', ')}\n`;
     textAreaElements[1].value += `Total price: ${totalPrice.toFixed(2)}\n`;
-    textAreaElements[1].value += `Average decoration factor: ${avgDecFactor / products.length}`;
+    avgDecFactor / products.length >= 0 ? textAreaElements[1].value += `Average decoration factor: ${avgDecFactor / products.length}` : textAreaElements[1].value += `Average decoration factor: ${avgDecFactor}`;
   }
   genButton.addEventListener('click', onGenerateClick);
   buyButton.addEventListener('click', onBuyClick);
