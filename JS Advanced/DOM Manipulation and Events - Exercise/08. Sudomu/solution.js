@@ -4,6 +4,8 @@ function solve() {
     let tableBodyElement = document.querySelector('table');
     let inputNumberElements = document.querySelectorAll('input[type="number"]');
 
+    checkButton.style.cursor = 'pointer';
+    clearButton.style.cursor = 'pointer';
 
     let resultCheck = (e) => {
         let sudokuBoard = [
@@ -37,9 +39,8 @@ function solve() {
 
     let boardClean = (e) => {
         inputNumberElements.forEach(e => e.value = '');
-        tableBodyElement.style.border = '';
+        tableBodyElement.style.border = 'none';
         checkResultElement.textContent = '';
-        checkResultElement.style.color = '';
     }
     clearButton.addEventListener('click', boardClean);
     checkButton.addEventListener('click', resultCheck);
