@@ -1,0 +1,10 @@
+h1, p{
+    font-weight: lighter;
+    text-align: center;
+    color: #7A7571;
+    max-width: 600px;
+}
+main > p {
+    font-weight: bold;
+    font-style: italic;
+}
