@@ -1,0 +1,28 @@
+main {
+    background-color: #F5F5F5;
+    max-width: 500px;
+    padding: 40px;
+}
+
+h1 {
+    font-weight: lighter;
+}
+
+button {
+    border-radius: 20px;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    cursor: pointer;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#icon>button, #filled>button {
+    background-color: #343435;
+    color: white;
+}
+
+#icon>button:hover{
+    background-color: green;
+    border-color: green;
+}
