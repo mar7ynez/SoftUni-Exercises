@@ -1,0 +1,9 @@
+article {
+    max-width: 1000px;
+    font-family: "Sofia Sans", sans-serif;
+}
+
+h1 {
+    font-family: "Sofia";
+    font-style: italic;
+}
