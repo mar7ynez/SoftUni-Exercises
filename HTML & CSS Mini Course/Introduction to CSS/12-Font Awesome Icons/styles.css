@@ -1,0 +1,21 @@
+table {
+    max-width: 200px;
+    background-color: azure;
+    padding: 40px;
+    padding-right: 150px;
+    border: solid grey;
+    border-width: 1px;
+}
+
+tbody {
+    font-size: 24px;
+    color: brown;
+    text-align: left;
+}
+
+button {
+    background: none;
+}
+.fa-solid fa-house {
+    color: blue
+}
