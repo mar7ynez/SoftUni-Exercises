@@ -1,5 +1,5 @@
-table {
-    max-width: 200px;
+#menu {
+    max-width: 250px;
     background-color: azure;
     padding: 40px;
     padding-right: 150px;
@@ -7,15 +7,51 @@ table {
     border-width: 1px;
 }
 
-tbody {
-    font-size: 24px;
+ul,
+a {
+    font-size: 22px;
     color: brown;
-    text-align: left;
+    text-decoration: none;
+    vertical-align: super;
+    margin-left: 5px;
 }
 
 button {
-    background: none;
+    margin-top: 50px;
+    color: white;
+    padding: 8px;
+    font-size: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
+    border-width: 1px;
+    border-color: dimgray;
+    border-radius: 3px;
+    box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.3);
 }
-.fa-solid fa-house {
-    color: blue
+
+button:hover {
+    cursor: pointer
+}
+
+#checkout {
+    background-color: #86AE4D;
+}
+
+#info {
+    background-color: #33689C;
+}
+
+#delete {
+    background-color: #8f2117;
+}
+#checkout:hover {
+    background-color: #3f571e;
+}
+
+#info:hover {
+    background-color: #193b5e;
+}
+
+#delete:hover {
+    background-color: #5e1812;
 }
