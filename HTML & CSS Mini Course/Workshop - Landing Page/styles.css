@@ -1,0 +1,135 @@
+body {
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+}
+
+#naviBar {
+    max-width: 100%;
+    background-color: white;
+    padding-left: 120px;
+    border-bottom: solid #41BEAD;
+    border-width: 1px;
+    box-shadow: 1px 3px 2px #309688;
+}
+
+nav>ul>li,
+button {
+    cursor: pointer;
+    color: #565656;
+    display: inline-block;
+    margin-right: 40px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+nav>ul>li:hover {
+    color: orange;
+}
+
+#naviBar>ul {
+    text-align: right;
+    padding: 5px;
+}
+
+.fa-magnifying-glass {
+    color: #41bead;
+}
+
+button {
+    font-size: 15px;
+    color: white;
+    padding: 8px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #FF9100;
+    border-color: #FF9100;
+    border-radius: 20px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+#kidsLogo {
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    margin: -8px;
+    height: 54px;
+    width: 170px;
+}
+
+#background {
+    background: url('images/kidsBg.jpg');
+    position: relative;
+    padding: 300px;
+    margin-top: 2px;
+}
+
+#layer {
+    background-color: #41beadcc;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#textover {
+    margin: 200px;
+    text-align: center;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: larger;
+    letter-spacing: 1px;
+    cursor: default;
+}
+
+h1>span {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+}
+
+#aboutInfo {
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    background-color: #FF9100;
+    padding: 100px;
+    border-top: solid #FFB402;
+    border-width: 12px;
+    padding-left: 80px;
+}
+
+#aboutInfo>h1 {
+    font-weight: 500;
+}
+
+#aboutBtn {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-radius: 30px;
+    font-size: 18px;
+}
+
+#layer>#aboutUl {
+    position: absolute;
+    padding: 50px;
+    margin-left: 300px;
+    margin-top: -70px;
+    padding-right: 50%;
+    border-radius: 12px;
+    box-shadow: 7px 6px 4px rgba(0, 0, 0, 0.3);
+    background-image: url('images/aboutImg.PNG');
+    background-size: contain;
+    text-align: center;
+    display: inline-block;
+
+}
+
+p {
+    font-size: 18px;
+    max-width: 750px;
+}
