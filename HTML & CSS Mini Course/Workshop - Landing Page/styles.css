@@ -133,3 +133,33 @@ p {
     font-size: 18px;
     max-width: 750px;
 }
+
+button:hover {
+    box-shadow: none;
+}
+
+#program {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: white;
+    color: #41bead;
+    padding: 750px;
+    padding-left: 200px;
+    padding-right: 200px;
+    text-align: center;
+    
+}
+
+#program>h1 {
+    letter-spacing: 1px;
+    font-size: 40px;
+    display: block;
+    margin-top: -250px;
+}
+
+#program>p {
+    display: inline-block;
+    text-align: left;
+    max-width:880px;
+    margin-top: 5px;
+    color: gray;
+}
