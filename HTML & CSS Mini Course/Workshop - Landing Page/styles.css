@@ -143,10 +143,14 @@ button:hover {
     background-color: white;
     color: #41bead;
     padding: 750px;
-    padding-left: 200px;
+    padding-left: 179px;
     padding-right: 200px;
     text-align: center;
-    
+    margin-left: 70px;
+    margin-right: 70px;
+    max-height: 150px;
+    border-bottom: dotted #DFF4F1;
+    border-width: 10px;
 }
 
 #program>h1 {
@@ -154,12 +158,237 @@ button:hover {
     font-size: 40px;
     display: block;
     margin-top: -250px;
+    padding-left: 40px;
 }
 
-#program>p {
+#program>p,
+#adv-content>p,
+#r-adv-content>p {
     display: inline-block;
     text-align: left;
-    max-width:880px;
+    max-width: 880px;
     margin-top: 5px;
     color: gray;
+}
+
+#program>div>h2 {
+    font-size: 30px;
+    color: #44A9F8;
+    text-align: left;
+    margin: 70px;
+    margin-bottom: 30px;
+    margin-left: 165px;
+}
+
+.fa-arrow-down {
+    font-size: 42px;
+    color: #92CDFB;
+    /* margin-left: 285px; */
+    position: absolute;
+    margin: -55px;
+    margin-left: -50px;
+}
+
+div>#l-firstArrow {
+    margin-top: auto;
+}
+
+div>#r-firstArrow {
+    margin-top: auto;
+}
+
+#programming,
+#block-programming,
+#advanced-prog,
+#androidApps,
+#gameBlocks,
+#htmlCss,
+#htmlJsGames,
+#r-programming,
+#r-block-programming,
+#r-advanced-prog,
+#r-androidApps,
+#r-gameBlocks,
+#r-htmlCss,
+#r-htmlJsGames {
+    background-color: #44A9F8;
+    padding: 25px;
+    max-width: 400px;
+    max-height: 65px;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 85px;
+    border-radius: 20px;
+    font-size: 25px;
+    box-shadow: 4px 5px 2px rgba(0, 0, 0, 0.3);
+}
+
+#r-block-programming {
+    background-color: #7CD1C5;
+}
+
+#r-programming,
+#r-block-programming,
+#r-advanced-prog,
+#r-androidApps,
+#r-gameBlocks,
+#r-htmlCss,
+#r-htmlJsGames {
+    background-color: #41BEAD;
+    padding: 25px;
+    max-width: 400px;
+    max-height: 65px;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 85px;
+    border-radius: 20px;
+    font-size: 25px;
+    box-shadow: 4px 5px 2px rgba(0, 0, 0, 0.3);
+}
+
+#advanced-prog {
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-bottom: 50px;
+    margin: 5px;
+    background-color: #BCE0FC;
+}
+
+#r-advanced-prog {
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-bottom: 50px;
+    margin: 5px;
+    background-color: #B0E3DC;
+}
+
+#content {
+    border-right: dotted #DFF4F1;
+    border-width: 10px;
+    display: block;
+    max-width: 50%;
+    height: 875px;
+}
+
+#content>ul>ul,
+div>#mid-adv,
+#advanced,
+#r-content>ul>ul,
+div>#r-mid-adv,
+#r-advanced {
+    background-color: #FFB402;
+    max-width: fit-content;
+    padding: 3px;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-size: medium;
+    border-radius: 3px;
+    display: inline-block;
+    vertical-align: super;
+    margin-top: -5px;
+}
+
+div>#mid-adv,
+div>#r-mid-adv {
+    background-color: #FF7100;
+}
+
+div>#advanced,
+div>#r-advanced {
+    background-color: #35364D;
+    margin-bottom: 10px;
+}
+
+#program>div>#laptop {
+    float: left;
+    margin-left: 160px;
+}
+
+#program>div>#gear {
+    margin-left: 105px;
+    float: left;
+}
+
+#androidApps,
+#r-androidApps {
+    display: inline-block;
+    font-size: 18px;
+    max-width: 100px;
+    margin: -30px;
+    margin-right: 490px;
+    box-shadow: 4px 5px 2px rgba(0, 0, 0, 0.3);
+}
+
+#r-androidApps {
+    margin-left: 16px;
+}
+
+#gameBlocks,
+#r-gameBlocks {
+    position: absolute;
+    font-size: 18px;
+    max-width: 100px;
+    margin-top: -68px;
+    margin-left: 165px;
+    box-shadow: 4px 5px 2px rgba(0, 0, 0, 0.3);
+}
+
+#htmlCss,
+#r-htmlCss {
+    position: absolute;
+    font-size: 18px;
+    max-width: 100px;
+    margin-top: -68px;
+    margin-left: 315px;
+    box-shadow: 4px 5px 2px rgba(0, 0, 0, 0.3);
+}
+
+#htmlJsGames,
+#r-htmlJsGames {
+    position: absolute;
+    font-size: 18px;
+    max-width: 100px;
+    margin-top: -68px;
+    margin-left: 465px;
+    box-shadow: 4px 5px 2px rgba(0, 0, 0, 0.3);
+}
+
+#adv-content>p {
+    margin-top: 90px;
+    text-align: left;
+    max-width: 620px;
+}
+
+#r-adv-content>p {
+    margin-top: 65px;
+    text-align: left;
+    max-width: 620px;
+
+}
+
+#r-htmlCss,
+#r-htmlJsGames,
+#r-gameBlocks {
+    margin-top: -90px;
+}
+
+#r-androidApps {
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-left: 20px;
+}
+
+#r-content {
+    margin-top: -943px;
+    margin-left: 775px;
+
+}
+
+#r-firstArrow,
+#r-secondArrow,
+#r-thirdArrow {
+    margin-left: -19px;
+    color: #7CD1C5;
 }
