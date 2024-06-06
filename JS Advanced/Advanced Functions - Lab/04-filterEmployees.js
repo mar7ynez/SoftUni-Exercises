@@ -1,0 +1,28 @@
+function filterEmployees(data, criteriaData) {
+  let input = JSON.parse(data);
+  let [key, criteria] = criteriaData.split('-')
+
+  input.filter(e => e[key] === criteria)
+    .forEach((n, idx) => console.log(`${idx}. ${n.first_name} ${n.last_name} - ${n.email}`));
+}
+filterEmployees(`[{
+  "id": "1",
+  "first_name": "Ardine",
+  "last_name": "Bassam",
+  "email": "abassam0@cnn.com",
+  "gender": "Female"
+}, {
+  "id": "2",
+  "first_name": "Kizzee",
+  "last_name": "Jost",
+  "email": "kjost1@forbes.com",
+  "gender": "Female"
+},  
+{
+  "id": "3",
+  "first_name": "Evanne",
+  "last_name": "Maldin",
+  "email": "emaldin2@hostgator.com",
+  "gender": "Male"
+}]`, 
+'gender-Female');
