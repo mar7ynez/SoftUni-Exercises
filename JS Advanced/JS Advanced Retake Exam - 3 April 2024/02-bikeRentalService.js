@@ -15,10 +15,7 @@ class BikeRentalService {
 
             if (sameBrandFound) {
                 sameBrandFound.quantity += quantity;
-
-                if (sameBrandFound.price < price) {
-                    sameBrandFound.price = price;
-                }
+                sameBrandFound.price = Math.max(sameBrandFound.price, price);
                 continue;
             }
             this.availableBikes.push({ brand, quantity, price });
@@ -49,7 +46,7 @@ class BikeRentalService {
             curBikesCost = bikeFound.price * quantity;
             totalPrice += curBikesCost;
         }
-        
+
         return `Enjoy your ride! You must pay the following amount $${totalPrice.toFixed(2)}.`
     }
 
@@ -72,6 +69,7 @@ class BikeRentalService {
 
     revision() {
         let bikesAvailable = [];
+        bikesAvailable.push('Available bikes:');
 
         this.availableBikes
             .sort((a, b) => a.price - b.price)
@@ -79,7 +77,9 @@ class BikeRentalService {
                 bikesAvailable.push(`${bike.brand} quantity:${bike.quantity} price:$${bike.price}`);
             });
 
-        return `Available bikes:\n${bikesAvailable.join('\n')}\nThe name of the bike rental service is ${this.name}, and the location is ${this.location}.`;
+        bikesAvailable.push(`The name of the bike rental service is ${this.name}, and the location is ${this.location}.`);
+
+        return bikesAvailable.join('\n');
     }
 }
 const rentalService = new BikeRentalService("MyBikes", "CityCenter");
