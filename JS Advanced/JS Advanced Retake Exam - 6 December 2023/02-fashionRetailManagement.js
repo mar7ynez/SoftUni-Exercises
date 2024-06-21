@@ -73,6 +73,3 @@ console.log(storeHouse.addProduct("Shirt", "L", 5, 30.0));
 console.log(storeHouse.addProduct("Shoes", "9", 8, 50.0));
 console.log(storeHouse.sendProduct("Shoes", "9", 8, 50.0));
 console.log(storeHouse.listProducts());
-
-
-
