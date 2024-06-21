@@ -66,8 +66,3 @@ console.log(myBookClub.addMember("Alice"));
 console.log(myBookClub.addMember("Alice"));
 console.log(myBookClub.assignBookToMember("Alice", "The Great Gatsby"));
 console.log(myBookClub.generateReadingReport());
-
-
-
-
-
