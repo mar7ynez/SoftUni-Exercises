@@ -70,7 +70,7 @@ class FlightBookingSystem {
                 outputMsg.push('Cheap bookings:');
 
                 filterCheapFlights.forEach(cheapFlight => {
-                    outputMsg.push(`${cheapFlight.passengerName} booked for flight ${cheapFlight.flightNumber}`);
+                    outputMsg.push(`${cheapFlight.passengerName} booked for flight ${cheapFlight.flightNumber}.`);
                 });
 
                 return outputMsg.join('\n');
