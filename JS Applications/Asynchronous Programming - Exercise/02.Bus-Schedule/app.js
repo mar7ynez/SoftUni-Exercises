@@ -1,7 +1,7 @@
 function solve() {
     const departBtnElement = document.getElementById('depart');
     const arriveBtnElement = document.getElementById('arrive');
-    const infoElement = document.getElementById('info');
+    const infoElement = document.querySelector('.info');
 
     let nextStop = {
         next: 'depot'
@@ -14,7 +14,13 @@ function solve() {
         const url = `http://localhost:3030/jsonstore/bus/schedule/${nextStop.next}`;
 
         fetch(url)
-            .then(res => res.json())
+            .then(res => {
+                if (res.status !== 200) {
+                    throw new Error('Error');
+                }
+                
+                return res.json();
+            })
             .then(data => {
                 nextStop = data;
                 infoElement.textContent = `Next stop ${data.name}`;
@@ -22,7 +28,7 @@ function solve() {
                 arriveBtnElement.removeAttribute('disabled');
             })
             .catch(error => {
-                infoElement.textContent = 'Error';
+                infoElement.textContent = error.message;
                 departBtnElement.setAttribute('disabled', 'disabled');
                 arriveBtnElement.setAttribute('disabled', 'disabled');
             });
