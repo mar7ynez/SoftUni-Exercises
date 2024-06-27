@@ -10,6 +10,7 @@ function solution() {
             createArticleHeads(data);
         })
         .catch(error => {
+            alert("Couldn't fetch article details", error);
         });
 
     function createArticleHeads(data) {
@@ -47,16 +48,21 @@ function solution() {
         const extraElement = accordionElement.querySelector('div:nth-of-type(2)');
         const paragraph = extraElement.querySelector('p');
 
-        fetch(`${extraContentUrl}/${buttonElement.id}`)
-            .then(response => response.json())
-            .then(data => {
-                paragraph.textContent = data.content;
-            })
-            .catch(error => {
-            });
-
-        extraElement.classList.toggle('extra');
-        buttonElement.textContent = buttonElement.textContent === 'More' ? 'Less' : 'More';
+        if (buttonElement.textContent === 'More') {
+            fetch(`${extraContentUrl}/${buttonElement.id}`)
+                .then(response => response.json())
+                .then(data => {
+                    paragraph.textContent = data.content;
+                    extraElement.style.display = 'block';
+                    buttonElement.textContent = 'Less';
+                })
+                .catch(error => {
+                    alert("Couldn't fetch article details", error);
+                });
+        } else {
+            extraElement.style.display = 'none';
+            buttonElement.textContent = 'More';
+        }
     }
 
     function showExtraContent() {
