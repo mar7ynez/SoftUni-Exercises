@@ -96,25 +96,20 @@ function createButtons(bookId) {
 }
 
 function onEditClick(bookId) {
+    const bookRow = Array.from(tableBody.querySelectorAll('tr'))
+        .find(row => row.id === bookId);
+
+    const bookData = bookRow.querySelectorAll('td');
+    const title = bookData[0].textContent;
+    const author = bookData[1].textContent;
+
     formHeader.textContent = 'Edit FORM';
     submitButton.textContent = 'Save';
     isEditMode = true;
     editBookId = bookId;
 
-    fetch(`${url}/${bookId}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error');
-            }
-            return response.json();
-        })
-        .then(data => {
-            authorInput.value = data.author;
-            titleInput.value = data.title;
-        })
-        .catch(error => {
-            alert(error.message);
-        });
+    titleInput.value = title;
+    authorInput.value = author;
 }
 
 function onDeleteClick(bookId) {
