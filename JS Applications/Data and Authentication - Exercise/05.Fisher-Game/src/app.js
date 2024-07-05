@@ -12,16 +12,14 @@ function onLogout(e) {
             'X-Authorization': data.accessToken
         }
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(response.status);
-        }
-        
-        localStorage.clear();
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            }
 
-        return response.json();
-    })
-    .catch(error => {
-        alert(error.message);
-    });
+            localStorage.clear();
+        })
+        .catch(error => {
+            alert(error.message);
+        });
 }
