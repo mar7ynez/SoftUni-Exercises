@@ -1,12 +1,10 @@
-import { updateNav, postRequest, addHandler } from "./util.js";
+import { updateNav, postRequest, addHandler,endpoints } from "./util.js";
 
 updateNav();
 
 addHandler('#login-view>#login', 'submit', onLogin);
 
 function onLogin(e) {
-    const url = 'http://localhost:3030/users/login';
-
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -23,5 +21,5 @@ function onLogin(e) {
         body: JSON.stringify({ email, password })
     }
 
-    postRequest(url, options, 'index.html');
+    postRequest(endpoints.login, null, options, './index.html', true);
 }

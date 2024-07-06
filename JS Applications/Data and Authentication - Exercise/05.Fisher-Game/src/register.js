@@ -1,12 +1,10 @@
-import { updateNav, postRequest, addHandler } from "./util.js";
+import { updateNav, postRequest, addHandler, endpoints } from "./util.js";
 
 updateNav();
 
 addHandler('form', 'submit', onRegister);
 
 function onRegister(e) {
-    const url = 'http://localhost:3030/users/register';
-
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -27,5 +25,5 @@ function onRegister(e) {
         body: JSON.stringify({ email, password })
     }
 
-    postRequest(url, options, 'index.html');
+    postRequest(endpoints.register, null, options, './index.html', true);
 }
