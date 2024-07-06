@@ -1,10 +1,12 @@
-const formElement = document.querySelector('form');
+import { updateNav, postRequest, addHandler } from "./util.js";
 
-formElement.addEventListener('submit', onRegister);
+updateNav();
 
-const regURL = 'http://localhost:3030/users/register';
+addHandler('form', 'submit', onRegister);
 
 function onRegister(e) {
+    const url = 'http://localhost:3030/users/register';
+
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -19,26 +21,11 @@ function onRegister(e) {
         return alert('Password does not match!')
     }
 
-    fetch(regURL, {
+    const options = {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
-    })
-    .then(response => {
-        if(!response.ok) {
-            throw new Error(response.status);
-        }
+    }
 
-        return response.json();
-    })
-    .then(data => {
-        localStorage.setItem('userData', JSON.stringify(data));
-        window.location = 'index.html';
-    })
-    .catch(error => {
-        alert(`${error}`);
-        formElement.reset();
-    })
+    postRequest(url, options, 'index.html');
 }
