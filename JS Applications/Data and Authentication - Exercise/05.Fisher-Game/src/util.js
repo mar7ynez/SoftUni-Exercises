@@ -47,12 +47,15 @@ function postRequest(url, callback, options, location, storageUse) {
             if (storageUse) {
                 localStorage.setItem('userData', JSON.stringify(data));
             }
+
             if (callback) {
                 fieldSetRef.style.border = 'solid black 2px';
                 fieldSetRef.textContent = '';
                 renderLegend();
-                callback(data);
+                const arrData = [data];
+                callback(arrData);
             }
+
             if (location) {
                 window.location = location;
             }
@@ -71,6 +74,7 @@ function getRequest(url, callback, options, updateNavi, clearStorage) {
 
             if (clearStorage) {
                 localStorage.clear();
+                window.location = './index.html';
             }
 
             if (updateNavi) {
@@ -85,9 +89,7 @@ function getRequest(url, callback, options, updateNavi, clearStorage) {
             if (callback) {
                 renderLegend();
                 fieldSetRef.style.border = 'solid black 2px';
-                data.forEach(curData => {
-                    callback(curData);
-                })
+                callback(data);
             }
         })
         .catch(error => {
@@ -96,53 +98,60 @@ function getRequest(url, callback, options, updateNavi, clearStorage) {
 }
 
 function renderCatches(data) {
-    const divContainer = document.createElement('div');
-    divContainer.id = 'catches';
+    const divCatches = document.createElement('div');
+    divCatches.id = 'catches';
+    
+    fieldSetRef.appendChild(divCatches);
 
-    const {
-        _ownerId, angler,
-        weight,
-        species,
-        location,
-        bait,
-        captureTime,
-        _id,
-    } = data;
+    data.forEach(curData => {
+        const isOwner = userData && curData._ownerId === userData._id;
 
-    let hasOwner = userData._id === _ownerId;
+        const divCatch = document.createElement('div');
+        divCatch.classList.add('catch');
 
-    const divElement = document.createElement('div');
-    divElement.classList.add('catch');
+        const anglerLabel = createLabelElements('Angler');
+        const anglerInput = createInputElements('text', 'angler', curData.angler);
+        const weightLabel = createLabelElements('Weight');
+        const weightInput = createInputElements('text', 'weight', curData.weight);
+        const speciesrLabel = createLabelElements('Species');
+        const speciesrInput = createInputElements('text', 'species', curData.species);
+        const locationLabel = createLabelElements('Location');
+        const locationInput = createInputElements('text', 'location', curData.location);
+        const baitLabel = createLabelElements('Bait');
+        const baitInput = createInputElements('text', 'bait', curData.bait);
+        const captureTimeLabel = createLabelElements('Capture Time');
+        const captureTimeInput = createInputElements('text', 'captureTime', curData.captureTime);
+        const updateButton = createButton('Update', 'update', curData._id, isOwner);
+        const deleteButton = createButton('Delete', 'delete', curData._id, isOwner);
 
-    divElement.innerHTML = `
-            <label>Angler</label>
-            <input type="text" class="angler" value="${angler}">
-            <label>Weight</label>
-            <input type="text" class="weight" value="${weight}">
-            <label>Species</label>
-            <input type="text" class="species" value="${species}">
-            <label>Location</label>
-            <input type="text" class="location" value="${location}">
-            <label>Bait</label>
-            <input type="text" class="bait" value="${bait}">
-            <label>Capture Time</label>
-            <input type="number" class="captureTime" value="${captureTime}">
-            <button class="update" ${!hasOwner ? 'disabled' : ''} data-id="${_id}">Update</button>
-            <button class="delete" ${!hasOwner ? 'disabled' : ''} data-id="${_id}">Delete</button>`;
+        const catchElements = [
+            anglerLabel,
+            anglerInput,
+            weightLabel,
+            weightInput,
+            speciesrLabel,
+            speciesrInput,
+            locationLabel,
+            locationInput,
+            baitLabel,
+            baitInput,
+            captureTimeLabel,
+            captureTimeInput,
+            updateButton,
+            deleteButton
+        ];
 
-    divContainer.appendChild(divElement);
-    fieldSetRef.appendChild(divContainer);
+        if (!isOwner) {
+            catchElements.forEach(curElement => curElement.setAttribute('disabled', 'disabled'));
+        }
 
-    const updateButton = divElement.querySelector('.update');
-    const deleteButton = divElement.querySelector('.delete');
+        catchElements.forEach(curElement => divCatch.appendChild(curElement));
 
-    if (updateButton) {
         updateButton.addEventListener('click', handleUpdate);
-    }
-
-    if (deleteButton) {
         deleteButton.addEventListener('click', handleDelete);
-    }
+
+        divCatches.appendChild(divCatch);
+    })
 }
 
 function handleUpdate(e) {
@@ -177,6 +186,35 @@ function handleDelete(e) {
         headers: { 'X-Authorization': userData.accessToken },
     });
     e.currentTarget.parentNode.remove();
+}
+function createLabelElements(labelContent) {
+    const labelElement = document.createElement('label');
+    labelElement.textContent = labelContent;
+
+    return labelElement;
+}
+
+function createInputElements(inputType, clasName, value) {
+    const inputElement = document.createElement('input');
+    inputElement.type = inputType;
+    inputElement.classList.add(clasName);
+    inputElement.value = value;
+
+    return inputElement;
+}
+
+function createButton(buttonContent, clsName, id, isOwner) {
+    const newButton = document.createElement('button');
+    newButton.textContent = buttonContent;
+    newButton.classList.add(clsName);
+    newButton.setAttribute('data-id', id);
+
+    if (!isOwner) {
+        newButton.setAttribute('disabled', 'disabled');
+        newButton.setAttribute('disabled', 'disabled');
+    }
+
+    return newButton;
 }
 
 function renderLegend() {
