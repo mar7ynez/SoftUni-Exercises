@@ -1,8 +1,5 @@
 import { updateNav, getRequest, postRequest, addHandler, renderCatches, fieldSetRef, endpoints } from "./util.js";
 
-fieldSetRef.style.border = 'none';
-fieldSetRef.textContent = 'Click to load catches';
-
 updateNav();
 
 addHandler('#logout', 'click', onLogout);
