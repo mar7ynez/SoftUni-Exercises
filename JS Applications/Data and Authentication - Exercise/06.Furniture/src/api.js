@@ -1,6 +1,6 @@
-const userData = localStorage.getItem('userData');
+const hostName = 'http://localhost:3030';
 
-function request(url, method, data) {
+function request(method, url, data) {
     const options = {
         method,
         headers: {},
@@ -11,24 +11,41 @@ function request(url, method, data) {
         options.body = JSON.stringify(data);
     }
 
+    const userData = JSON.parse(localStorage.getItem('userData'));
+
     if (userData) {
-        options['X-Authorization'] = userData.accessToken;
+        options.headers['X-Authorization'] = userData.accessToken;
     }
 
-    fetch(url, options)
+    return fetch(`${hostName}${url}`, options)
         .then(response => {
             if (!response.ok) {
-                throw new Error(response.status);
+                return response.json().then(error => {
+                    throw new Error(error.message);
+                });
             }
-
-            return response.json();
+            if (!url.includes('logout')) {
+                return response.json();
+            }
         })
-        .then(data => {
-            localStorage.setItem('userData', JSON.stringify(data));
-        })
-        .then(error => {
+        .catch(error => {
             alert(error.message);
-        })
+        });
 }
 
-export { request };
+function setStorage(data) {
+    localStorage.setItem('userData', JSON.stringify(data));
+}
+
+const get = (url) => request('GET', url);
+const post = (url, data) => request('POST', url, data);
+const put = (url, data) => request('PUT', url, data);
+const del = (url) => request('DELETE', url);
+
+export {
+    get,
+    post,
+    put,
+    del,
+    setStorage,
+};
