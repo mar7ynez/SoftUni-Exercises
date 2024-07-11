@@ -1,4 +1,4 @@
-import { post, get } from "./api.js";
+import { post, get, getStorage } from "./api.js";
 import { renderProducts } from "./utility.js";
 
 const tableBody = document.querySelector('.table>tbody');
@@ -70,9 +70,9 @@ function onBuy(e) {
     });
 }
 
-const userId = JSON.parse(localStorage.getItem('userData'))?._id;
-
 function onAllOrders(e) {
+    const userId = getStorage('userData')._id;
+
     get(`/data/orders?${userId}`)
         .then(data => {
             const ownerProducts = data.filter(product => product._ownerId === userId);
@@ -109,7 +109,6 @@ function showAllOrders(products, price) {
     orders.appendChild(totalPriceParagraph);
     orders.appendChild(allOrdersButton);
 }
-
 
 function onLogout(e) {
     get('/users/logout')

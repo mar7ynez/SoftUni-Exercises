@@ -1,3 +1,5 @@
+import { getStorage } from "./api";
+
 function renderProducts(data, parentElement) {
     data.forEach(curProduct => {
         const tableRow = createTableRow(
@@ -34,7 +36,8 @@ function createTableRow(name, price, factor, img) {
 
     const checkBox = document.createElement('input');
     checkBox.type = 'checkbox';
-    if (!localStorage.getItem('userData')) {
+
+    if (!getStorage('userData')) {
         checkBox.setAttribute('disabled', 'disabled');
     }
     const checkBoxElement = createTableData(checkBox);

@@ -11,7 +11,7 @@ function request(method, url, data) {
         options.body = JSON.stringify(data);
     }
 
-    const userData = JSON.parse(localStorage.getItem('userData'));
+    const userData = getStorage('userData');
 
     if (userData) {
         options.headers['X-Authorization'] = userData.accessToken;
@@ -37,6 +37,10 @@ function setStorage(data) {
     localStorage.setItem('userData', JSON.stringify(data));
 }
 
+function getStorage(data) {
+    return JSON.parse(localStorage.getItem(data));
+}
+
 const get = (url) => request('GET', url);
 const post = (url, data) => request('POST', url, data);
 const put = (url, data) => request('PUT', url, data);
@@ -48,4 +52,5 @@ export {
     put,
     del,
     setStorage,
+    getStorage
 };
