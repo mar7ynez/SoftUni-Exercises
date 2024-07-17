@@ -4,13 +4,21 @@ import { createComponent } from './topicComponent.js';
 const createTopicForm = document.querySelector('.new-topic-border>form');
 createTopicForm.addEventListener('submit', createNewTopic);
 
-const cancelButton = document.querySelector('.cancel');
+const topicContainer = document.querySelector('.topic-container');
+topicContainer.addEventListener('click', onTopic);
 
-const topicTitle = document.querySelector('.topic-title');
+const cancelButton = document.querySelector('.cancel');
+cancelButton.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    createTopicForm.reset();
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     get(endpoints.topics)
-        .then(data => createComponent(Object.values(data), topicTitle))
+        .then(data => {
+            topicContainer.replaceChildren(...Object.values(data).map(createComponent));
+        })
         .catch(error => alert(error.message));
 })
 
@@ -26,8 +34,7 @@ function createNewTopic(e) {
 
     post(endpoints.topics, { topicName, username, postText, date: new Date() })
         .then(data => {
-            const postedData = [data];
-            createComponent(postedData, topicTitle);
+            topicContainer.appendChild(createComponent(data));
         })
         .catch(error => {
             alert(error.message)
@@ -36,8 +43,17 @@ function createNewTopic(e) {
     createTopicForm.reset();
 }
 
-cancelButton.addEventListener('click', (e) => {
-    e.preventDefault();
+function onTopic(e) {
+    if (e.target.nodeName !== 'H2') {
+        return;
+    }
+    const topicWrapper = e.target.parentNode.parentNode.parentNode;
 
-    createTopicForm.reset();
-});
+    const postInfo = {
+        name: e.target.textContent,
+        id: topicWrapper.getAttribute('data-id'),
+    }
+    localStorage.setItem('postInfo', JSON.stringify(postInfo));
+
+    window.location = "theme-content.html";
+}
