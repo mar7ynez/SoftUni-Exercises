@@ -1,7 +1,7 @@
 const hostName = 'http://localhost:3030';
 const endpoints = {
-    topics: 'http://localhost:3030/jsonstore/collections/myboard/posts',
-    comments: 'http://localhost:3030/jsonstore/collections/myboard/comments'
+    topics: '/jsonstore/collections/myboard/posts',
+    comments: '/jsonstore/collections/myboard/comments'
 }
 
 function request(method, url, data) {
@@ -28,6 +28,7 @@ function request(method, url, data) {
         });
 }
 
+const get = (url) => request('GET', url);
 const post = (url, data) => request('POST', url, data);
 
-export { post, endpoints };
+export { post, get, endpoints };
