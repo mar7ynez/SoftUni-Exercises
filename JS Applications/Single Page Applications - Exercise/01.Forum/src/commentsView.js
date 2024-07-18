@@ -17,10 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     get(`${endpoints.comments}`)
         .then(data => {
-            Object.values(data).forEach(comment => {
-                commentDiv.appendChild(userComment(comment))
-            })
+            const filteredComments = Object.values(data).filter(comment => comment.id === postInfo.id);
+            Object.values(filteredComments).forEach(comment => commentDiv.appendChild(userComment(comment)));
         })
+        .catch(error => {
+            alert(error.message);
+        });
 })
 
 function onCommentPost(e) {
@@ -33,7 +35,7 @@ function onCommentPost(e) {
         return alert('All fields are required!');
     }
 
-    post(endpoints.comments, { postText, username, date: new Date() })
+    post(endpoints.comments, { postText, username, date: new Date(), id: postInfo.id })
         .then(data => {
             commentDiv.appendChild(userComment(data));
         })
