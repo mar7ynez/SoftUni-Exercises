@@ -1,12 +1,13 @@
 import { renderHome } from './pages/home.js';
 import { renderLogin } from './pages/login.js';
+import { renderLogout } from './pages/logout.js';
 import { renderRegister } from './pages/register.js';
 
 const routes = {
     '/': renderHome,
     '/login': renderLogin,
     '/register': renderRegister,
-    '/logout': renderHome,
+    '/logout': renderLogout,
 }
 
 function router(path) {
@@ -21,4 +22,4 @@ function hideContent() {
     sections.forEach(section => section.style.display = 'none');
 }
 
-export { router };
+export { router, hideContent };
