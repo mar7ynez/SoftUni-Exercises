@@ -3,6 +3,9 @@ import { getUserData } from './utils.js';
 const hostName = 'http://localhost:3030';
 const endpoints = {
     movies: '/data/movies',
+    login: '/users/login',
+    register: '/users/register',
+    logout: '/users/logout',
 }
 
 function requester(method, url, data) {
