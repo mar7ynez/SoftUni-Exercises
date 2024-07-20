@@ -1,33 +1,46 @@
 import { api, endpoints } from "../api.js";
+import { updateNav } from "../nav.js";
+import { hideContent } from "../router.js";
+import { getUserData } from "../utils.js";
 
 const homeSection = document.querySelector('#home-page');
 const movieList = document.querySelector('#movies-list');
 const movieSection = document.querySelector('#movie');
+const addMovieButton = document.querySelector('#add-movie-button');
+
 
 function renderHome() {
-    api.get(endpoints.movies)
-        .then(movies => {
-            renderAllMovies(movies)
-            homeSection.style.display = 'block';
-            movieSection.style.display = 'block';
-        })
+  hideContent();
+  updateNav();
+
+  const userData = getUserData();
+
+  if (userData) {
+    addMovieButton.style.display = 'inline-block';
+  }
+
+  api.get(endpoints.movies)
+    .then(movies => {
+      renderAllMovies(movies)
+      homeSection.style.display = 'block';
+      movieSection.style.display = 'block';
+    })
 }
 
 function renderAllMovies(movies) {
-    const fragment = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
 
-    movies.forEach(movie => fragment.appendChild(renderMovie(movie)));
+  movies.forEach(movie => fragment.appendChild(renderMovie(movie)));
 
-    movieList.innerHTML = '';
-    movieList.appendChild(fragment);
+  movieList.innerHTML = '';
+  movieList.appendChild(fragment);
 }
 
 function renderMovie(movie) {
-    const movieElement = document.createElement('li');
-    movieElement.setAttribute('class', "card mb-4");
+  const movieElement = document.createElement('li');
+  movieElement.setAttribute('class', "card mb-4");
 
-    movieElement.innerHTML = `
-    <li class="card mb-4">
+  movieElement.innerHTML = `
       <img class="card-img-top"  src="${movie.img}"/>
       <div class="card-body">
         <h4 class="card-title">${movie.title}</h4>
@@ -37,10 +50,8 @@ function renderMovie(movie) {
       <div class="card-footer">
       <button type="button" class="btn btn-info">Details</button>
       </div>
-    </li>
     `
-
-    return movieElement;
+  return movieElement;
 }
 
 export { renderHome };
