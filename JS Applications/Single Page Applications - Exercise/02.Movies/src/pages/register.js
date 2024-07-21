@@ -21,6 +21,10 @@ function onRegister(e) {
     if (!email || !password) {
         return alert('All fields are required!');
     }
+    
+    if (password.length < 6) {
+        return alert('Password must be atleast 6 characters!');
+    }
 
     if (password !== repeatPassword) {
         return alert('Password does not match!');
@@ -28,8 +32,10 @@ function onRegister(e) {
 
     api.post(endpoints.register, { email, password })
         .then(userData => {
-            setUserData(userData)
-            renderHome();
+            if (userData) {
+                setUserData(userData)
+                renderHome();
+            }
         })
         .catch(error => {
             alert(error.message);
