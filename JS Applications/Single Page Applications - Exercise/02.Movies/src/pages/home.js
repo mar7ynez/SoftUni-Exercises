@@ -1,7 +1,6 @@
 import { api, endpoints } from "../api.js";
 import { updateNav } from "../nav.js";
-import { hideContent } from "../router.js";
-import { getUserData } from "../utils.js";
+import { getUserData, hideContent } from "../utils.js";
 
 const homeSection = document.querySelector('#home-page');
 const movieList = document.querySelector('#movies-list');
@@ -48,7 +47,9 @@ function renderMovie(movie) {
         </a>
       </div>
       <div class="card-footer">
-      <button type="button" class="btn btn-info">Details</button>
+          <a data-id=${movie._id} href="/details">
+            <button type="button" class="btn btn-info">Details</button>
+          </a>     
       </div>
     `
   return movieElement;
