@@ -1,23 +1,32 @@
 import { api, endpoints } from "../api.js";
+import { getUserData, hideContent } from "../utils.js";
+import { setFormData } from "./editMovie.js";
 
 const detailsSection = document.querySelector('#movie-example');
 
-function renderDetails() {
-    detailsSection.style.display = 'block';
-}
+let ownerId = '';
 
-function getMovieById(id) {
-    api.get(`${endpoints.movies}/${id}`)
-        .then(movieData => {
-            movieDetails(movieData);
-        })
+function renderDetails(id) {
+  hideContent();
+
+  api.get(`${endpoints.movies}/${id}`)
+    .then(movieData => {
+      ownerId = movieData._ownerId
+      detailsSection.style.display = 'block';
+
+      movieDetails(movieData);
+      setFormData(movieData);
+    })
 }
 
 function movieDetails(movie) {
-    const movieContainer = document.createElement('div');
-    movieContainer.classList.add('container');
+  const movieContainer = document.createElement('div');
+  movieContainer.classList.add('container');
 
-    movieContainer.innerHTML = `
+  const userData = getUserData();
+  const isOwner = ownerId === userData?._id;
+
+  movieContainer.innerHTML = `
     <div class="row bg-light text-dark">
         <h1>Movie title: ${movie.title}</h1>
 
@@ -28,20 +37,20 @@ function movieDetails(movie) {
             alt="Movie"
           />
         </div>
-        <div class="col-md-4 text-center">
+        <div data-id=${movie._id} class="col-md-4 text-center">
           <h3 class="my-3">Movie Description</h3>
           <p>
            ${movie.description}
           </p>
-          <a class="btn btn-danger" href="#">Delete</a>
-          <a class="btn btn-warning" href="#">Edit</a>
-          <a class="btn btn-primary" href="#">Like</a>
-          <span class="enrolled-span">Liked 1</span>
-        </div>
-    </div>
-    `
-    
-    detailsSection.replaceChildren(movieContainer);
+          ${isOwner ? '<a class="btn btn-danger" href="/delete">Delete</a>' : ''}
+          ${isOwner ? '<a class="btn btn-warning" href="/edit">Edit</a>' : ''}
+          ${!isOwner && userData ? '<a class="btn btn-primary" href="#">Like</a>' : ''}
+          </div >
+          </div >
+          `
+  //TODO ${!isOwner && userData ? '<span class="enrolled-span">Liked 1</span>' : ''}
+
+  detailsSection.replaceChildren(movieContainer);
 }
 
-export { getMovieById, renderDetails };
+export { renderDetails };
