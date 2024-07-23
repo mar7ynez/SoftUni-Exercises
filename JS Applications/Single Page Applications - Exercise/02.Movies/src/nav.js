@@ -10,7 +10,7 @@ function updateNav() {
     if (userData) {
         userNavigation.forEach(userNav => userNav.style.display = 'block');
         guestNavigation.forEach(guestNav => guestNav.style.display = 'none');
-        welcomeMsg.textContent =  userData.email;
+        welcomeMsg.textContent = `Welcome, ${userData.email}`;
     } else {
         userNavigation.forEach(userNav => userNav.style.display = 'none');
         guestNavigation.forEach(guestNav => guestNav.style.display = 'block');
