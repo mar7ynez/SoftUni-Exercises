@@ -6,6 +6,9 @@ const endpoints = {
     login: '/users/login',
     register: '/users/register',
     logout: '/users/logout',
+    likes: '/data/likes',
+    likesByMovieId: (movieId) => `/data/likes?where=movieId%3D%22${movieId}%22&distinct=_ownerId&count`,
+    likesByUserId: (movieId, userId) => `/data/likes?where=movieId%3D%22${movieId}%22%20and%20_ownerId%3D%22${userId}%22`,
 }
 
 function requester(method, url, data) {
@@ -32,7 +35,11 @@ function requester(method, url, data) {
                 throw new Error(response.status);
             }
 
-            return response.json();
+            if (response.status === 204) {
+                return response;
+            } else {
+                return response.json();
+            }
         })
         .catch(error => {
             alert(error.message);
