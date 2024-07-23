@@ -1,9 +1,12 @@
 import { updateNav } from './nav.js';
-import { getMovieById } from './pages/details.js';
+import { deleteMovie } from './pages/delete.js';
+import { renderDetails } from './pages/details.js';
+import { renderHome } from './pages/home.js';
+import { getLikedMovie } from './pages/like.js';
 import { router } from './router.js';
-import { getUserData } from './utils.js';
 
 updateNav();
+renderHome();
 
 const navigation = document.querySelector('nav');
 
@@ -34,15 +37,34 @@ moviesList.addEventListener('click', (e) => {
         return;
     }
 
-    const userData = getUserData();
+    const movieId = e.target.parentNode.dataset.id;
+    renderDetails(movieId);
 
-    if (!userData) {
+    const url = new URL(e.target.parentNode);
+    router(url.pathname);
+})
+
+const movieDetails = document.querySelector('#movie-example');
+
+movieDetails.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const details = document.querySelector('.col-md-4.text-center');
+
+    if (e.target.nodeName !== 'A') {
         return;
     }
 
-    const movieId = e.target.parentNode.dataset.id;
-    getMovieById(movieId);
+    if (e.target.className === 'btn btn-danger') {
+        deleteMovie(details.dataset.id);
+    }
 
-    const url = new URL(e.target.parentNode);
+    if (e.target.className === 'btn btn-primary') {
+        getLikedMovie(details.dataset.id);
+        e.target.remove();
+        return;
+    }
+
+    const url = new URL(e.target);
     router(url.pathname);
 })
