@@ -60,8 +60,11 @@ movieDetails.addEventListener('click', (e) => {
     }
 
     if (e.target.className === 'btn btn-primary') {
-        getLikedMovie(details.dataset.id);
         e.target.remove();
+        
+        getLikedMovie(details.dataset.id);
+        renderDetails(details.dataset.id);
+
         return;
     }
 
