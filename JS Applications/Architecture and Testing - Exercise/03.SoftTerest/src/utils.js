@@ -12,4 +12,15 @@ function hideContent() {
     mainContent.forEach(content => content.style.display = 'none');
 }
 
-export { getUserData, setUserData, hideContent };
+function submitHandler(callback) {
+    return function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        const data = Object.fromEntries(formData);
+
+        callback(data, e.currentTarget);
+    }
+}
+
+export { getUserData, setUserData, hideContent, submitHandler };
