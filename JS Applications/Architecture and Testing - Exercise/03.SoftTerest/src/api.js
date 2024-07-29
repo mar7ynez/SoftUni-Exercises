@@ -1,3 +1,5 @@
+import { getUserData } from "./utils.js";
+
 const host = 'http://localhost:3030'
 
 function request(method, url, data) {
