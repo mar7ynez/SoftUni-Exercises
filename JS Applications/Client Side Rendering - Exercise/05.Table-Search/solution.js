@@ -29,22 +29,18 @@ import { html, render } from '../node_modules/lit-html/lit-html.js';
 
    function onClick(e) {
       const tableRows = root.querySelectorAll('tr');
+      const tableData = root.querySelectorAll('tr>td');
 
       tableRows.forEach(tr => tr.classList.remove('select'));
 
       if (!searchText.value) {
          return;
       }
+      const filteredData = Array.from(tableData)
+         .filter(td => td.textContent.toLowerCase().includes(searchText.value.toLowerCase()));
 
-      tableRows.forEach(tr => {
-         const tableData = tr.children;
+      filteredData.forEach(td => td.parentNode.classList.add('select'));
 
-         const filteredData = Array.from(tableData)
-            .filter(td => td.textContent.toLowerCase().includes(searchText.value.toLowerCase()));
-
-         filteredData.forEach(td => td.parentNode.classList.add('select'));
-      });
-      
       searchText.value = '';
    }
 })()
