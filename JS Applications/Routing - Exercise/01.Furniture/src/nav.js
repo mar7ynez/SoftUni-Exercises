@@ -14,15 +14,15 @@ let activeButton = (btnHref) => {
 
 const guestNav = () => html`
     <div id="guest">
-        <a class="${updateBtnClass('/login', clickedBtnHref)}" id="loginLink" href="/login" @click="${setActive}">Login</a>
-        <a class="${updateBtnClass('/register', clickedBtnHref)}" id="registerLink" href="/register" @click="${setActive}">Register</a>
+        <a class="${setClass('/login', clickedBtnHref)}" id="loginLink" href="/login" @click="${setActive}">Login</a>
+        <a class="${setClass('/register', clickedBtnHref)}" id="registerLink" href="/register" @click="${setActive}">Register</a>
     </div>
 `;
 
 const userNav = () => html`
     <div id="user">
-        <a class="${updateBtnClass('/create', clickedBtnHref)}" id="createLink" href="/create" @click="${setActive}">Create Furniture</a>
-        <a class="${updateBtnClass('/myFurniture', clickedBtnHref)}" id="profileLink" href="/myFurniture" @click="${setActive}">My Publications</a>
+        <a class="${setClass('/create', clickedBtnHref)}" id="createLink" href="/create" @click="${setActive}">Create Furniture</a>
+        <a class="${setClass('/myFurniture', clickedBtnHref)}" id="profileLink" href="/myFurniture" @click="${setActive}">My Publications</a>
         <a id="logoutBtn" href="javascript:void(0)" @click="${onLogout}">Logout</a>
     </div>
 `;
@@ -30,12 +30,12 @@ const userNav = () => html`
 const navigationTemp = (hasUser) => html`
     <h1><a @click="${setActive}" href="/">Furniture Store</a></h1>
     <nav>
-        <a class="${updateBtnClass('/dashboard', clickedBtnHref)}" id="catalogLink" href="/dashboard" @click="${setActive}">Dashboard</a>
+        <a class="${setClass('/dashboard', clickedBtnHref)}" id="catalogLink" href="/dashboard" @click="${setActive}">Dashboard</a>
         ${hasUser ? userNav() : guestNav()}
     </nav>
 `;
 
-function updateBtnClass(buttonHref, clickedBtn) {
+function setClass(buttonHref, clickedBtn) {
     const buttonStatus = clickedBtn === buttonHref ? 'active' : '';
 
     return buttonStatus;
