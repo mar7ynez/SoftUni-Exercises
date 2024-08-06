@@ -27,7 +27,7 @@ const furnCardTemp = (furnData) => html`
                         <p>Price: <span>${curFurn.price} $</span></p>
                     </footer>
                     <div>
-                        <a href=”/details” class="btn btn-info">Details</a>
+                        <a href="/details/${curFurn._id}" class="btn btn-info">Details</a>
                     </div>
                 </div>
             </div>
