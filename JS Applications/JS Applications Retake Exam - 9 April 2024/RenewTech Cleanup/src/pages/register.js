@@ -32,8 +32,10 @@ export const registerView = (ctx) => {
 
         authService.register({ email, password, rePass })
             .then(userData => {
-                setUserData(userData);
-                ctx.page.redirect('/');
+                if (userData) {
+                    setUserData(userData);
+                    ctx.page.redirect('/');
+                }
             })
     }
 

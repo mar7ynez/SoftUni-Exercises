@@ -29,8 +29,10 @@ export const loginView = (ctx) => {
 
         authService.login({ email, password })
             .then(userData => {
-                setUserData(userData);
-                ctx.page.redirect('/');
+                if (userData) {
+                    setUserData(userData);
+                    ctx.page.redirect('/');
+                }
             })
 
     }
