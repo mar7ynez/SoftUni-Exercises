@@ -38,16 +38,18 @@ const detailsTemplate = (tattooData, isOwner, totalLikes, isLiked, isUser, onLik
 `;
 
 export const renderDetails = async (ctx) => {
-    const { totalLikes, isLiked } = await likeService.getLikes(ctx.params.tattooId, ctx.user?._id);
-    
+    const tattooId = ctx.params.tattooId;
+
+    const { totalLikes, isLiked } = await likeService.getLikes(tattooId, ctx.user?._id);
+
     const onLike = (e) => {
         e.preventDefault();
-        likeService.postLike(ctx.params.tattooId)
+        likeService.postLike(tattooId)
         .then(() => {
-            ctx.page.redirect(`/tattoos/${ctx.params.tattooId}/details`)
+            ctx.page.redirect(`/tattoos/${tattooId}/details`)
         })
     }
-    tattooService.getOne(ctx.params.tattooId)
+    tattooService.getOne(tattooId)
         .then(tattooData => {
             const isOwner = ctx.user?._id === tattooData._ownerId;
 
