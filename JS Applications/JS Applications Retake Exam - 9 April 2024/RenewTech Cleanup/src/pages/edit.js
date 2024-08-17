@@ -26,21 +26,22 @@ const inputFields = [
 ];
 
 export const editView = (ctx) => {
+    const solutionId = ctx.params.detailsId;
+    
     const onEdit = (data, form) => {
-
         if (inputFields.some(fieldName => !data[fieldName])) {
             return alert('All fields are required!');
         }
 
         const { type, ['image-url']: imageUrl, description, ['more-info']: learnMore } = data;
 
-        solutionService.edit(ctx.params.detailsId, { type, imageUrl, description, learnMore })
+        solutionService.edit(solutionId, { type, imageUrl, description, learnMore })
         .then(() => {
-            ctx.page.redirect(`/details/${ctx.params.detailsId}`);
+            ctx.page.redirect(`/details/${solutionId}`);
         })
     }
 
-    solutionService.getOne(ctx.params.detailsId)
+    solutionService.getOne(solutionId)
         .then(solution => {
             ctx.render(editTemplate(solution, onEdit));
         })
