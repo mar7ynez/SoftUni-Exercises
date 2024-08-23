@@ -3,9 +3,12 @@ const homeHtml = require('./views/homeView.html');
 const siteCss = require('./views/site.css');
 const addBreed = require('./views/addBreed.html');
 const addCat = require('./views/addCat.html');
-const { cats } = require('./cats');
+const { getCats } = require('./cats');
 
 const server = http.createServer((req, res) => {
+
+    const cats = getCats();
+
     switch (req.url) {
         case '/': res.writeHead(200, { 'Content-Type': 'text/html' }); res.write(homeHtml(cats));
             break;
