@@ -1,70 +1,77 @@
 const http = require('http');
-const homeHtml = require('./views/homeView.html');
-const siteCss = require('./views/site.css');
-const addBreed = require('./views/addBreed.html');
-const addCat = require('./views/addCat.html');
+const fs = require('fs').promises;
+const querystring = require('querystring');
+
 const { getCats } = require('./cats');
 const { saveCat } = require('./cats');
-const formidable = require('formidable');
+const { generateCatCards } = require('./cats');
+
+const viewPaths = {
+    home: './views/index.html',
+    addBreed: './views/addBreed.html',
+    addCat: './views/addCat.html',
+    edit: './views/editCat.html',
+    siteCss: './styles/site.css',
+    catPart: './partials/cat.html'
+}
+
+const renderView = (res, path, contentType) => {
+    fs.readFile(path, { encoding: 'utf-8' })
+        .then(data => {
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.write(data);
+            res.end();
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+const readFile = (path) => {
+    return fs.readFile(path, { encoding: 'utf-8' });
+}
 
 const server = http.createServer((req, res) => {
-    const cats = getCats();
-
     switch (req.url) {
         case '/':
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.write(homeHtml(cats));
-            res.end();
+            readFile(viewPaths.home, { encoding: 'utf-8' })
+                .then(data => {
+                    return generateCatCards(readFile(viewPaths.catPart), getCats())
+                        .then(catCards => data.replace(`{{cats}}`, catCards));
+                })
+                .then(finalHtml => {
+                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                    res.write(finalHtml);
+                    res.end();
+                })
             break;
 
         case '/styles/site.css':
-            res.writeHead(200, { 'Content-Type': 'text/css' });
-            res.write(siteCss);
-            res.end();
+            renderView(res, viewPaths.siteCss, 'text/css');
             break;
 
         case '/cats/add-breed':
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.write(addBreed);
-            res.end();
+            renderView(res, viewPaths.addBreed, 'text/html');
             break;
 
         case '/cats/add-cat':
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.write(addCat);
-            res.end();
+            renderView(res, viewPaths.addCat, 'text/html');
             break;
 
         case '/cats/add':
             if (req.method === 'POST') {
-                const form = new formidable.IncomingForm(); // Initialize Formidable
+                let body = [];
 
-                form.parse(req, (err, fields, files) => {
-                    if (err) {
-                        res.writeHead(400, { 'Content-Type': 'text/html' });
-                        res.write('<h1>Error processing the form</h1>');
-                        res.end();
-                        return;
-                    }
+                req.on('data', (chunk) => body.push(chunk));
 
-                    const name = Array.isArray(fields.name) ? fields.name[0] : fields.name;
-                    const breed = Array.isArray(fields.breed) ? fields.breed[0] : fields.breed;
-                    const description = Array.isArray(fields.description) ? fields.description[0] : fields.description;
-                    const imageUrl = Array.isArray(fields.imageUrl) ? fields.imageUrl[0] : fields.imageUrl;
+                req.on('close', () => {
+                    const parsedData = querystring.parse(body.join(''));
 
-                    const newCat = {
-                        id: Date.now(),
-                        imageUrl: imageUrl,
-                        name: name,
-                        breed: breed,
-                        description: description
-                    };
+                    saveCat(parsedData);
 
-                    saveCat(newCat);
-
-                    res.writeHead(302, { Location: '/' });
+                    res.writeHead(301, { 'location': '/' });
                     res.end();
-                });
+                })
             }
             break;
 
