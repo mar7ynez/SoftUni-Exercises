@@ -1,10 +1,11 @@
 const http = require('http');
 const fs = require('fs').promises;
-const querystring = require('querystring');
 
-const { getCats } = require('./cats');
-const { saveCat } = require('./cats');
-const { generateCatCards } = require('./cats');
+const { saveCat } = require('./services/catService');
+const { generateCatCards } = require('./services/catService');
+const { saveBreed } = require('./services/breedService');
+const { updateBreedOptions } = require('./services/breedService');
+const { handleAndSavePostData } = require('./services/postDataService');
 
 const viewPaths = {
     home: './views/index.html',
@@ -12,31 +13,40 @@ const viewPaths = {
     addCat: './views/addCat.html',
     edit: './views/editCat.html',
     siteCss: './styles/site.css',
-    catPart: './partials/cat.html'
+    catPart: './partials/cat.html',
+    breedPart: './partials/breed.html',
+    addCatPart: './partials/addCatOptions.html'
+}
+
+const readFile = (path) => {
+    return fs.readFile(path, { encoding: 'utf-8' })
+        .then(data => data)
+        .catch(error => {
+            console.error(`Read data errror: ${error.message}`)
+        })
 }
 
 const renderView = (res, path, contentType) => {
-    fs.readFile(path, { encoding: 'utf-8' })
+    readFile(path, { encoding: 'utf-8' })
         .then(data => {
             res.writeHead(200, { 'Content-Type': contentType });
             res.write(data);
             res.end();
         })
         .catch(error => {
-            console.error(error);
+            console.error(`Error rendering page: ${error.message}`);
         });
 }
 
-const readFile = (path) => {
-    return fs.readFile(path, { encoding: 'utf-8' });
-}
 
 const server = http.createServer((req, res) => {
+    let body = [];
+
     switch (req.url) {
         case '/':
-            readFile(viewPaths.home, { encoding: 'utf-8' })
+            readFile(viewPaths.home)
                 .then(data => {
-                    return generateCatCards(readFile(viewPaths.catPart), getCats())
+                    return generateCatCards(readFile(viewPaths.catPart))
                         .then(catCards => data.replace(`{{cats}}`, catCards));
                 })
                 .then(finalHtml => {
@@ -52,6 +62,17 @@ const server = http.createServer((req, res) => {
 
         case '/cats/add-breed':
             renderView(res, viewPaths.addBreed, 'text/html');
+
+            readFile(viewPaths.addCatPart)
+                .then(addCatHtml => {
+                    return updateBreedOptions(readFile(viewPaths.breedPart))
+                        .then(options => addCatHtml.replace('{{options}}', options.join('\n')));
+                })
+                .then(actualOptions => {
+                    fs.writeFile(viewPaths.addCat, actualOptions);
+
+                    res.end();
+                })
             break;
 
         case '/cats/add-cat':
@@ -59,20 +80,11 @@ const server = http.createServer((req, res) => {
             break;
 
         case '/cats/add':
-            if (req.method === 'POST') {
-                let body = [];
+            handleAndSavePostData(req, res, saveCat, 301, { 'location': '/' }, body);
+            break;
 
-                req.on('data', (chunk) => body.push(chunk));
-
-                req.on('close', () => {
-                    const parsedData = querystring.parse(body.join(''));
-
-                    saveCat(parsedData);
-
-                    res.writeHead(301, { 'location': '/' });
-                    res.end();
-                })
-            }
+        case '/cats/breed':
+            handleAndSavePostData(req, res, saveBreed, 301, { 'location': '/cats/add-breed' }, body);
             break;
 
         default:
