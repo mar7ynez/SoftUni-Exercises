@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs').promises;
 
-const { saveCat, generateCatCards } = require('./services/catService');
+const { saveCat, generateCatCards, getCatById, deleteCat, populateTempForm, getCats } = require('./services/catService');
 const { saveBreed, updateBreedOptions } = require('./services/breedService');
 const { handleAndSavePostData } = require('./services/postDataService');
 
@@ -10,6 +10,7 @@ const viewPaths = {
     addBreed: './views/addBreed.html',
     addCat: './views/addCat.html',
     edit: './views/editCat.html',
+    delete: './views/catShelter.html',
     siteCss: './styles/site.css',
     catPart: './partials/cat.html',
     breedPart: './partials/breed.html',
@@ -40,7 +41,11 @@ const renderView = (res, path, contentType) => {
 const server = http.createServer((req, res) => {
     let body = [];
 
-    switch (req.url) {
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const catId = url.searchParams.get('catId');
+
+
+    switch (url.pathname) {
         case '/':
             readFile(viewPaths.home)
                 .then(data => {
@@ -83,6 +88,67 @@ const server = http.createServer((req, res) => {
 
         case '/cats/breed':
             handleAndSavePostData(req, res, saveBreed, 301, { 'location': '/cats/add-breed' }, body);
+            break;
+
+        case '/cats/shelter':
+            if (catId) {
+                getCatById(catId)
+                    .then(catData => {
+                        readFile(viewPaths.delete)
+                            .then(catShelterPart => {
+                                res.writeHead(200, { 'Content-Type': 'text/html' });
+                                res.write(populateTempForm(catData, catShelterPart));
+                                res.end();
+                            });
+                    });
+            }
+            break;
+
+        case '/cats/delete':
+            if (catId) {
+                deleteCat(catId)
+                    .then(() => {
+                        res.writeHead(301, { 'Location': '/' });
+                        res.end();
+                    });
+            }
+            break;
+
+        case '/cats/edit':
+            if (catId) {
+                getCatById(catId)
+                    .then(catData => {
+                        readFile(viewPaths.edit)
+                            .then(editTemp => {
+                                let populatedTemplate = editTemp;
+
+                                populatedTemplate = Object.keys(catData).reduce((accumulator, key) => {
+                                    return accumulator.replaceAll(`{{${key}}}`, catData[key]);
+                                }, populatedTemplate);
+
+                                return populatedTemplate;
+                            })
+                            .then(populatedTemplate => {
+                                return updateBreedOptions(readFile(viewPaths.breedPart))
+                                    .then(options => populatedTemplate.replace('{{options}}', options.join('\n')));
+                            })
+                            .then(finalTemp => {
+                                res.writeHead(200, { 'Content-Type': 'text/html' });
+                                res.write(finalTemp);
+                                res.end();
+                            })
+                    })
+            }
+
+            break;
+
+        case '/edit':
+            getCats()
+                .then(allCats => {
+                    //TODO: Handle edit logic
+                    res.end();
+                })
+
             break;
 
         default:
