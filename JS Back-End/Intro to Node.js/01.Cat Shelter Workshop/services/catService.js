@@ -41,8 +41,42 @@ function generateCatCards(catPart) {
         });
 }
 
+function getCatById(catId) {
+    return fs.readFile(dataPath, { encoding: 'utf-8' })
+        .then(catsData => {
+            const allCats = JSON.parse(catsData);
+            const foundCat = allCats.find(cat => cat.id === Number(catId));
+
+            return foundCat;
+        })
+        .catch(error => console.error(`Cat not found: ${error.message}`));
+}
+
+function deleteCat(catId) {
+    return fs.readFile(dataPath).
+        then(catsData => {
+            const updatedData = JSON.parse(catsData).filter(cat => cat.id !== Number(catId));
+
+            fs.writeFile(dataPath, JSON.stringify(updatedData, null, 2));
+        })
+        .catch(error => console.error(`Error shelter the cat: ${error.message}`));
+}
+
+function populateTempForm(catData, catShelterTemp) {
+    let populatedTemplate = catShelterTemp;
+
+    populatedTemplate = Object.keys(catData).reduce((accumulator, key) => {
+        return accumulator.replaceAll(`{{${key}}}`, catData[key]);
+    }, populatedTemplate);
+
+    return populatedTemplate;
+}
+
 module.exports = {
     getCats,
     saveCat,
-    generateCatCards
+    generateCatCards,
+    getCatById,
+    deleteCat,
+    populateTempForm
 }
