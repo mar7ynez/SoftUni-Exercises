@@ -1,5 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
+const querystring = require('querystring');
 
 const dataPath = path.join('./data', 'catsData.json');
 
@@ -72,11 +73,27 @@ function populateTempForm(catData, catShelterTemp) {
     return populatedTemplate;
 }
 
+function editCatData(editedData, catId) {
+    getCats()
+        .then(allCats => {
+            let idxOfCurCatData = 0;
+
+            allCats.forEach((cat, idx) => Number(cat.id) === Number(catId) ? idxOfCurCatData = Number(idx) : -1);
+
+            editedData.id = idxOfCurCatData + 1;
+
+            allCats.splice(Number(idxOfCurCatData), 1, editedData);
+
+            fs.writeFile(dataPath, JSON.stringify(allCats, null, 2));
+        })
+}
+
 module.exports = {
     getCats,
     saveCat,
     generateCatCards,
     getCatById,
     deleteCat,
-    populateTempForm
+    populateTempForm,
+    editCatData
 }
