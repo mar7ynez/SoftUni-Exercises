@@ -10,12 +10,12 @@ const collectChunks = (chunk, body) => {
     body.push(chunk);
 }
 
-const handleAndSavePostData = (req, res, saveFunction, statusCode, header, body) => {
+const handleAndSavePostData = (req, res, saveFunction, statusCode, header, body, catId) => {
     if (req.method === 'POST') {
         req.on('data', (chunk) => collectChunks(chunk, body));
 
         req.on('close', () => {
-            saveFunction(parseQueryData(body.join('')));
+            saveFunction(parseQueryData(body.join('')), catId);
 
             res.writeHead(statusCode, header)
             res.end();
