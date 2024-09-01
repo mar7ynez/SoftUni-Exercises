@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs').promises;
 
-const { saveCat, generateCatCards, getCatById, deleteCat, populateTempForm, getCats } = require('./services/catService');
+const { saveCat, generateCatCards, getCatById, deleteCat, populateTempForm, editCatData } = require('./services/catService');
 const { saveBreed, updateBreedOptions } = require('./services/breedService');
 const { handleAndSavePostData } = require('./services/postDataService');
 
@@ -22,7 +22,7 @@ const readFile = (path) => {
         .then(data => data)
         .catch(error => {
             console.error(`Read data errror: ${error.message}`)
-        })
+        });
 }
 
 const renderView = (res, path, contentType) => {
@@ -44,7 +44,6 @@ const server = http.createServer((req, res) => {
     const url = new URL(req.url, `http://${req.headers.host}`);
     const catId = url.searchParams.get('catId');
 
-
     switch (url.pathname) {
         case '/':
             readFile(viewPaths.home)
@@ -56,7 +55,7 @@ const server = http.createServer((req, res) => {
                     res.writeHead(200, { 'Content-Type': 'text/html' });
                     res.write(finalHtml);
                     res.end();
-                })
+                });
             break;
 
         case '/styles/site.css':
@@ -75,7 +74,7 @@ const server = http.createServer((req, res) => {
                     fs.writeFile(viewPaths.addCat, actualOptions);
 
                     res.end();
-                })
+                });
             break;
 
         case '/cats/add-cat':
@@ -83,11 +82,11 @@ const server = http.createServer((req, res) => {
             break;
 
         case '/cats/add':
-            handleAndSavePostData(req, res, saveCat, 301, { 'location': '/' }, body);
+            handleAndSavePostData(req, res, saveCat, 302, { 'location': '/' }, body);
             break;
 
         case '/cats/breed':
-            handleAndSavePostData(req, res, saveBreed, 301, { 'location': '/cats/add-breed' }, body);
+            handleAndSavePostData(req, res, saveBreed, 302, { 'location': '/cats/add-breed' }, body);
             break;
 
         case '/cats/shelter':
@@ -120,13 +119,7 @@ const server = http.createServer((req, res) => {
                     .then(catData => {
                         readFile(viewPaths.edit)
                             .then(editTemp => {
-                                let populatedTemplate = editTemp;
-
-                                populatedTemplate = Object.keys(catData).reduce((accumulator, key) => {
-                                    return accumulator.replaceAll(`{{${key}}}`, catData[key]);
-                                }, populatedTemplate);
-
-                                return populatedTemplate;
+                                return populateTempForm(catData, editTemp);
                             })
                             .then(populatedTemplate => {
                                 return updateBreedOptions(readFile(viewPaths.breedPart))
@@ -136,19 +129,13 @@ const server = http.createServer((req, res) => {
                                 res.writeHead(200, { 'Content-Type': 'text/html' });
                                 res.write(finalTemp);
                                 res.end();
-                            })
-                    })
+                            });
+                    });
             }
-
             break;
 
         case '/edit':
-            getCats()
-                .then(allCats => {
-                    //TODO: Handle edit logic
-                    res.end();
-                })
-
+            handleAndSavePostData(req, res, editCatData, 301, { 'Location': '/' }, body, catId);
             break;
 
         default:
