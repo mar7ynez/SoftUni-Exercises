@@ -25,17 +25,18 @@
         <form action="/edit?catId={{id}}" method="POST" class="cat-form">
             <h2>Edit Cat</h2>
             <label for="name">Name</label>
-            <input type="text" id="name" value="{{name}}">
+            <input type="text" id="name" name="name" value="{{name}}">
             <label for="description">Description</label>
-            <textarea id="description">{{description}}</textarea>
+            <textarea id="description" name="description">{{description}}</textarea>
             <label for="image">Image</label>
-            <input type="text" value="{{imageUrl}}" id="image">
+            <input type="text" name="imageUrl" id="image" value="{{imageUrl}}">
             <label for="group">Breed</label>
-            <select id="group">
+            <select id="group" name="breed">
                 {{options}}
             </select>
-            <button>Edit Cat</button>
+            <button type="submit">Edit Cat</button>
         </form>
+
     </main>
 </body>
 
