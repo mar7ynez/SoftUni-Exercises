@@ -23,10 +23,10 @@ function saveCat(newCat) {
         });
 }
 
-function generateCatCards(catPart) {
+function generateCatCards(catPart, allCats) {
     return Promise.all([
         catPart,
-        getCats()
+        allCats
     ])
         .then(([catHtml, allCats]) => {
             const allCardsHtml = allCats.map(cat => {
