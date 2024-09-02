@@ -1,7 +1,8 @@
 const http = require('http');
 const fs = require('fs').promises;
+const querystring = require('querystring');
 
-const { saveCat, generateCatCards, getCatById, deleteCat, populateTempForm, editCatData } = require('./services/catService');
+const { saveCat, generateCatCards, getCatById, deleteCat, populateTempForm, editCatData, getCats } = require('./services/catService');
 const { saveBreed, updateBreedOptions } = require('./services/breedService');
 const { handleAndSavePostData } = require('./services/postDataService');
 
@@ -48,7 +49,7 @@ const server = http.createServer((req, res) => {
         case '/':
             readFile(viewPaths.home)
                 .then(data => {
-                    return generateCatCards(readFile(viewPaths.catPart))
+                    return generateCatCards(readFile(viewPaths.catPart), getCats())
                         .then(catCards => data.replace(`{{cats}}`, catCards));
                 })
                 .then(finalHtml => {
@@ -136,6 +137,27 @@ const server = http.createServer((req, res) => {
 
         case '/edit':
             handleAndSavePostData(req, res, editCatData, 301, { 'Location': '/' }, body, catId);
+            break;
+
+        case '/search':
+            const searchInput = url.searchParams.get('searchTerm').toLowerCase();
+
+            getCats()
+                .then(allCatsData => {
+                    return allCatsData.filter(cat => cat.breed.toLowerCase().includes(searchInput));
+                })
+                .then(filteredBySearch => {
+                    return generateCatCards(readFile(viewPaths.catPart), filteredBySearch);
+                })
+                .then(populatedTemplate => {
+                    return readFile(viewPaths.home)
+                        .then(homeHtml => homeHtml.replace('{{cats}}', populatedTemplate));
+                })
+                .then(finalHtml => {
+                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                    res.write(finalHtml);
+                    res.end();
+                })
             break;
 
         default:
