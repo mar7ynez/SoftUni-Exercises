@@ -1,6 +1,5 @@
 const http = require('http');
 const fs = require('fs').promises;
-const querystring = require('querystring');
 
 const { saveCat, generateCatCards, getCatById, deleteCat, populateTempForm, editCatData, getCats } = require('./services/catService');
 const { saveBreed, updateBreedOptions } = require('./services/breedService');
