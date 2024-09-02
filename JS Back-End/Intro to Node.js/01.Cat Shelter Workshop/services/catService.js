@@ -1,6 +1,5 @@
 const fs = require('fs').promises;
 const path = require('path');
-const querystring = require('querystring');
 
 const dataPath = path.join('./data', 'catsData.json');
 
