@@ -45,7 +45,7 @@ function getCatById(catId) {
     return fs.readFile(dataPath, { encoding: 'utf-8' })
         .then(catsData => {
             const allCats = JSON.parse(catsData);
-            const foundCat = allCats.find(cat => cat.id === Number(catId));
+            const foundCat = allCats.find(cat => cat.id == catId);
 
             return foundCat;
         })
@@ -55,7 +55,7 @@ function getCatById(catId) {
 function deleteCat(catId) {
     return fs.readFile(dataPath).
         then(catsData => {
-            const updatedData = JSON.parse(catsData).filter(cat => cat.id !== Number(catId));
+            const updatedData = JSON.parse(catsData).filter(cat => cat.id != catId);
 
             fs.writeFile(dataPath, JSON.stringify(updatedData, null, 2));
         })
@@ -77,7 +77,7 @@ function editCatData(editedData, catId) {
         .then(allCats => {
             let idxOfCurCatData = 0;
 
-            allCats.forEach((cat, idx) => Number(cat.id) === Number(catId) ? idxOfCurCatData = Number(idx) : -1);
+            allCats.forEach((cat, idx) => cat.id == catId ? idxOfCurCatData = Number(idx) : -1);
 
             editedData.id = idxOfCurCatData + 1;
 
