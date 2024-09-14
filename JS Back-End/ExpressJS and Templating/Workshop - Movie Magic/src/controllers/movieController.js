@@ -8,16 +8,20 @@ router.get('/create', (req, res) => {
 router.post('/create', (req, res) => {
     const newMovie = req.body;
 
-    movieServices.addMovie(newMovie);
-
-    res.redirect('/');
+    movieServices.addMovie(newMovie)
+        .then(() => {
+            res.redirect('/');
+        })
+        .catch(error => {
+            alert(`Cannot create movie: ${error.message}`)
+        });
 })
 
 router.get('/movie/details/:movieId', (req, res) => {
     movieServices.getOne(req.params.movieId)
         .then(movie => {
             movie.rating = new Array(Number(movie.rating)).fill(1);
-            
+
             res.render('details', movie);
         })
 });
