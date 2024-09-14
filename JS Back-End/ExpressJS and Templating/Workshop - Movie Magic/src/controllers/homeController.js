@@ -3,8 +3,11 @@ const router = require('express').Router();
 const moviesService = require('../services/movieService');
 
 router.get('/', (req, res) => {
-    moviesService.getAll()
-        .then(movies => res.render('home', { movies }));
+    moviesService.getAll().lean()
+        .then(movies => {
+            console.log(movies)
+            res.render('home', { movies })
+        });
 });
 
 router.get('/about', (req, res) => {
@@ -12,7 +15,12 @@ router.get('/about', (req, res) => {
 });
 
 router.get('/search', (req, res) => {
-    res.render('search');
+
+    moviesService.search(req.query)
+        .then(movies => {
+            res.render('search', { movies: movies });
+        })
+
 });
 
 router.get('/404', (req, res) => {
