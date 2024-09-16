@@ -11,9 +11,13 @@ const castSchema = new mongoose.Schema({
         min: 8,
         max: 100,
     },
+    born: {
+        type: String,
+        required: true,
+    },
     nameInMovie: {
         type: String,
-        required: true
+        required: false
     },
     castImage: {
         type: String,
@@ -30,3 +34,7 @@ const castSchema = new mongoose.Schema({
         ref: 'Movie'
     }]
 });
+
+const Cast = mongoose.model('Cast', castSchema);
+
+module.exports = Cast;
