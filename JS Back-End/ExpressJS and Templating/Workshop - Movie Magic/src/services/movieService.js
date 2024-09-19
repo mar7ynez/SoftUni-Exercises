@@ -1,58 +1,45 @@
-const fs = require('fs').promises;
-const path = require('path');
+const Movie = require('../models/Movie');
 
-const dataPath = path.join(__dirname, '..', 'data', 'moviesData.json');
-
-const getAll = () => {
-    return fs.readFile(dataPath, { encoding: 'utf-8' })
-        .then(data => JSON.parse(data))
-        .catch(error => console.error(`Error getting movies: ${error.message}`))
-}
+const getAll = () => Movie.find();
 
 const getOne = (movieId) => {
-    return getAll()
-        .then(movies => movies.find(movie => movie._id == movieId))
-        .catch(error => console.error(`Error getting movie: ${error.message}`))
+    return Movie.findById(movieId).populate('casts');
 }
 
-const addMovie = (newMovie) => {
-    getAll()
-        .then(movies => {
-            newMovie._id = movies.slice().pop()._id + 1;
+const addMovie = (newMovie) => Movie.create(newMovie);
 
-            movies.push(newMovie);
+const attach = (movieId, castId) => {
+    return getOne(movieId)
+        .then(movie => {
+            movie.casts.push(castId);
+            movie.save();
 
-            return movies;
-        })
-        .then(updatedData => {
-            fs.writeFile(dataPath, JSON.stringify(updatedData, null, 2));
+            return movie;
         })
 }
 
 const search = (query) => {
-    return getAll()
-        .then(movies => {
-            let filteredMovies = movies;
+    const searchQuery = {};
 
-            if (query.title) {
-                filteredMovies = filteredMovies.filter(movie => movie.title.toLowerCase().includes(query.title.toLowerCase()));
-            }
+    if (query.title) {
+        searchQuery.title = new RegExp(query.title, 'i');
+    }
 
-            if (query.genre) {
-                filteredMovies = filteredMovies.filter(movie => movie.genre.toLowerCase().includes(query.genre.toLowerCase()));
-            }
+    if (query.genre) {
+        searchQuery.genre = query.genre.toLowerCase();
+    }
 
-            if (query.year) {
-                filteredMovies = filteredMovies.filter(movie => movie.year.toLowerCase().includes(query.year.toLowerCase()));
-            }
+    if (query.year) {
+        searchQuery.year = query.year;
+    }
 
-            return filteredMovies;
-        })
+    return Movie.find(searchQuery);
 }
 
 module.exports = {
     getAll,
     getOne,
     addMovie,
-    search
+    search,
+    attach
 }
