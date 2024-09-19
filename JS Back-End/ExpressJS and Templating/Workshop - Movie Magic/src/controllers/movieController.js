@@ -23,7 +23,7 @@ router.get('/movie/details/:movieId', (req, res) => {
         .then(movie => {
             movie.rating = new Array(Number(movie.rating)).fill(1);
 
-            res.render('details', movie);
+            res.render('details', { ...movie });
         })
         .catch(error => console.log(`Cannot get the moive: ${error.message}`));
 });
@@ -41,9 +41,7 @@ router.get('/movie/:movieId/attach', (req, res) => {
 
 router.post('/movie/:movieId/attach', (req, res) => {
     movieServices.attach(req.params.movieId, req.body.cast)
-        .then((data) => {
-            console.log(data);
-
+        .then(() => {
             res.redirect(`/movie/${req.params.movieId}/attach`)
         })
 });
