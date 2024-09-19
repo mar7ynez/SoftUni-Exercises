@@ -13,12 +13,12 @@ router.get('/about', (req, res) => {
 });
 
 router.get('/search', (req, res) => {
+    const { title, genre, year } = req.query;
 
-    moviesService.search(req.query)
+    moviesService.search(req.query).lean()
         .then(movies => {
-            res.render('search', { movies: movies });
+            res.render('search', { movies, title, genre, year });
         })
-
 });
 
 router.get('/404', (req, res) => {
