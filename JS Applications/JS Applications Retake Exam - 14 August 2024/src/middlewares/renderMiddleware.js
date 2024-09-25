@@ -1,5 +1,5 @@
 import { render } from '../../node_modules/lit-html/lit-html.js';
-import { renderNavigation } from '../views/navigation.js';
+import { renderNavigation } from '../controllers/homeController.js';
 
 const mainRoot = document.querySelector('main');
 const headerRoot = document.querySelector('header');
