@@ -36,10 +36,16 @@ const search = (query) => {
     return Movie.find(searchQuery);
 }
 
+const edit = (movieId, updatedMovieData) => Movie.findByIdAndUpdate(movieId, updatedMovieData);
+
+const del = (movieId) => Movie.findByIdAndDelete(movieId);
+
 module.exports = {
     getAll,
     getOne,
     addMovie,
     search,
-    attach
+    attach,
+    edit,
+    del
 }
