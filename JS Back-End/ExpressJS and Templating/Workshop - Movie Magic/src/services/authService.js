@@ -1,8 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('../lib/jwt');
-
-const SECRET = 'asflasksfjaasfakljsfhaslfajihf';
+require('dotenv').config();
 
 const hashData = (data) => {
     return bcrypt.hash(data, 12);
@@ -52,7 +51,7 @@ const login = (userData) => {
                 email: existingUser.email
             }
 
-            return jwt.sign(payload, SECRET, { expiresIn: '1h' });
+            return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
         })
         .catch(error => {
             throw error;
