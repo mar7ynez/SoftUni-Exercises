@@ -4,12 +4,12 @@ const moviesService = require('../services/movieService');
 router.get('/', (req, res) => {
     moviesService.getAll().lean()
         .then(movies => {
-            res.render('home', { movies })
+            res.render('home/home', { movies })
         });
 });
 
 router.get('/about', (req, res) => {
-    res.render('about');
+    res.render('home/about');
 });
 
 router.get('/search', (req, res) => {
@@ -17,7 +17,7 @@ router.get('/search', (req, res) => {
 
     moviesService.search(req.query).lean()
         .then(movies => {
-            res.render('search', { movies, title, genre, year });
+            res.render('home/search', { movies, title, genre, year });
         })
 });
 
