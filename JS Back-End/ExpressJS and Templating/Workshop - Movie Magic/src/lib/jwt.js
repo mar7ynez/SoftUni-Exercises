@@ -14,6 +14,22 @@ const sign = (payload, secretOrPrivateKey, options) => {
     return promise;
 }
 
+jwt.verify
+const verify = (token, secretOrPublicKey, options) => {
+    const promise = new Promise((resolve, reject) => {
+        jwt.verify(token, secretOrPublicKey, options, (error, decodedToken) => {
+            if (error) {
+                return reject(error);
+            }
+
+            return resolve(decodedToken);
+        });
+    })
+
+    return promise;
+}
+
 module.exports = {
-    sign
+    sign,
+    verify
 }; 
