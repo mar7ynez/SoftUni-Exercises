@@ -92,7 +92,17 @@
   margin-top: 2em;
 }
 
-.social-btn > .edit-btn,
+.attach-btn {
+  display: ruby-text;
+  border: solid 1px black;
+  margin: inherit;
+  margin-top: 35px;
+  padding: 11px;
+  border-radius: 0px;
+  margin-left: 105px;
+}
+
+.social-btn>.edit-btn,
 .del-btn {
   color: black;
   font-weight: bold;
@@ -120,7 +130,8 @@
 }
 
 .edit-btn:hover,
-.del-btn:hover {
+.del-btn:hover,
+.details {
   -webkit-transform: scale(1.1);
   -ms-transform: scale(1.1);
   transform: scale(1.1);
@@ -141,7 +152,7 @@
   transition: all 0.1s ease-in;
 }
 
-.thumb > img {
+.thumb>img {
   height: 370px;
   width: 100%;
 }
