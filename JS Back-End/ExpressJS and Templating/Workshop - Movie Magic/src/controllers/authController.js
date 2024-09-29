@@ -24,8 +24,15 @@ router.get('/login', (req, res) => {
 router.post('/login', (req, res) => {
     authService.login(req.body)
         .then(token => {
-            console.log(token);
+            res.cookie('user', token);
+
+            res.redirect('/');
         })
+});
+
+router.get('/logout', (req, res) => {
+    res.clearCookie('user');
+    res.redirect('/');
 });
 
 module.exports = router;
