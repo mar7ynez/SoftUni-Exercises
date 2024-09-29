@@ -1,13 +1,18 @@
 const router = require('express').Router();
 const movieServices = require('../services/movieService');
 const castServices = require('../services/castService');
+const { isAuth } = require('../middlewares/authMiddleware');
 
-router.get('/create', (req, res) => {
-    res.render('create');
+router.get('/create', isAuth, (req, res) => {
+    res.render('movie/create');
 });
 
 router.post('/create', (req, res) => {
-    const newMovie = req.body;
+    const newMovie = {
+        ...req.body,
+        _ownerId: req.user._id
+    };
+
 
     movieServices.addMovie(newMovie)
         .then(() => {
@@ -18,17 +23,19 @@ router.post('/create', (req, res) => {
         });
 });
 
-router.get('/movie/details/:movieId', (req, res) => {
+router.get('/details/:movieId', (req, res) => {
     movieServices.getOne(req.params.movieId).lean()
         .then(movie => {
+            const isOwner = req.user?._id == movie._ownerId;
+
             movie.rating = new Array(Number(movie.rating)).fill(1);
 
-            res.render('details', { ...movie });
+            res.render('movie/details', { ...movie, isOwner });
         })
         .catch(error => console.log(`Cannot get the moive: ${error.message}`));
 });
 
-router.get('/movie/:movieId/attach', (req, res) => {
+router.get('/:movieId/attach', isAuth, (req, res) => {
     Promise.all([
         movieServices.getOne(req.params.movieId).lean(),
         castServices.getAll().lean()
@@ -39,11 +46,35 @@ router.get('/movie/:movieId/attach', (req, res) => {
         .catch(error => console.log(`Cannot get movie or casts: ${error.message}`));
 });
 
-router.post('/movie/:movieId/attach', (req, res) => {
+router.post('/:movieId/attach', (req, res) => {
     movieServices.attach(req.params.movieId, req.body.cast)
         .then(() => {
             res.redirect(`/movie/${req.params.movieId}/attach`)
         })
+});
+
+router.get('/:movieId/edit', isAuth, (req, res) => {
+    movieServices.getOne(req.params.movieId).lean()
+        .then(movie => {
+            res.render('movie/edit', movie);
+        })
+        .catch(error => console.log(`Cannot get the moive: ${error.message}`));
+});
+
+router.post('/:movieId/edit', (req, res) => {
+    movieServices.edit(req.params.movieId, req.body)
+        .then(() => {
+            res.redirect(`/movie/details/${req.params.movieId}`);
+        })
+        .catch(error => console.log('Error editing the movie\n', error));
+});
+
+router.get('/:movieId/delete', (req, res) => {
+    movieServices.del(req.params.movieId)
+        .then(() => {
+            res.redirect('/');
+        })
+        .catch(error => console.log('Error deleting the movie\n', error));
 });
 
 module.exports = router;
