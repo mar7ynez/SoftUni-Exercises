@@ -6,7 +6,7 @@ const castController = require('./controllers/castController');
 const authController = require('./controllers/authController');
 
 router.use(homeController);
-router.use(movieController);
+router.use('/movie', movieController);
 router.use('/cast', castController);
 router.use('/user', authController);
 

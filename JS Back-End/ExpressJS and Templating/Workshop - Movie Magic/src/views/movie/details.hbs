@@ -18,10 +18,14 @@
 
                 <p class="disc">Description: {{description}}</p>
             </div>
+            {{#if isOwner}}
             <div class="details-btn">
-                <a href="/movies/{{_id}}/edit" id="edit-button">Edit</a>
-                <a href="/movies/{{_id}}/delete" id="delete-button">Delete</a>
+                <a href="/movie/{{_id}}/edit" id="edit-button">Edit</a>
+                <a href="/movie/{{_id}}/delete" id="delete-button">Delete</a>
+                <a href="/movie/{{_id}}/attach" class="attach-btn">Attach</a>
+
             </div>
+            {{/if}}
         </div>
         <div class="card_right">
             <img src="{{imageUrl}}" alt="{{title}}">
