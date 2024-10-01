@@ -11,11 +11,18 @@ const addMovie = (newMovie) => Movie.create(newMovie);
 const attach = (movieId, castId) => {
     return getOne(movieId)
         .then(movie => {
+            if (!movie) {
+                throw new Error('Error getting casts!');
+            }
+
             movie.casts.push(castId);
             movie.save();
 
             return movie;
         })
+        .catch(error => {
+            throw error;
+        });
 }
 
 const search = (query) => {
