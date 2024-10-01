@@ -33,9 +33,24 @@
     </div>
 
     <div class="main-cast-card">
-        <div class="no-cast">
-            <p>There are no casts added yet...</p>
+        {{#each casts}}
+        <div class="cast-card">
+            <div class="card-img">
+                <img src="{{castImage}}" alt="{{name}}">
+            </div>
+            <div class="cast-info">
+                <h1>{{name}}</h1>
+                <h3>Age: {{age}}</h3>
+                <h3>Born: {{born}}</h3>
+            </div>
         </div>
+        {{else}}
+        <div class="main-cast-card">
+            <div class="no-cast">
+                <p>There are no casts added yet...</p>
+            </div>
+        </div>
+        {{/each}}
     </div>
 
 </section>
