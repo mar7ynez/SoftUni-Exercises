@@ -26,7 +26,6 @@ const register = (newUser) => {
             return User.create(newUser);
         })
         .catch(error => {
-            console.log('Error cannot hash the password\n', error);
             throw error;
         });
 };
