@@ -1,19 +1,20 @@
 const router = require('express').Router();
 const authService = require('../services/authService');
+const getErrorMsg = require('../utils/errorUtils');
 
 router.get('/register', (req, res) => {
     res.render('auth/register');
 });
 
 router.post('/register', (req, res) => {
+    const { email, password } = req.body;
+
     authService.register(req.body)
         .then(() => {
             res.redirect('/');
         })
         .catch(error => {
-            console.log('Error cannot register new user\n', error);
-
-            res.status(500).send(error.message);
+            res.render('auth/register', { error: getErrorMsg(error), email, password })
         });
 });
 
@@ -28,6 +29,9 @@ router.post('/login', (req, res) => {
 
             res.redirect('/');
         })
+        .catch(error => {
+            res.render('auth/login', { error: getErrorMsg(error) });
+        });
 });
 
 router.get('/logout', (req, res) => {
