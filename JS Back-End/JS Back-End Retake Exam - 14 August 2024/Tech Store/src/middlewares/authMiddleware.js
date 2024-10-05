@@ -12,6 +12,7 @@ export const auth = async (req, res, next) => {
         const decodedToken = await jwt.verify(token, process.env.SECRET_KEY)
 
         req.user = decodedToken;
+        res.locals.isAuthenticated = true
 
         next();
     }
