@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
         res.render('home/home', { products });
     }
     catch (error) {
-        console.log('Error getting products');
+        res.render('home/home', { error: getErrorMsg(error) });
     }
 });
 
