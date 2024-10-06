@@ -3,51 +3,51 @@ import mongoose from "mongoose";
 const deviceSchema = new mongoose.Schema({
     brand: {
         type: String,
-        required: true
+        required: [true, 'Brand is required!']
     },
     model: {
         type: String,
-        required: true
+        required: [true, 'Model is required!']
     },
     hardDisk: {
         type: String,
-        required: true
+        required: [true, 'Hard Disk is required!']
     },
     screenSize: {
         type: String,
-        required: true
+        required: [true, 'Screen size is required!']
     },
     ram: {
         type: String,
-        required: true
+        required: [true, 'Ram is required!']
     },
     os: {
         type: String,
-        required: true
+        required: [true, 'Operating system is required!']
     },
     cpu: {
         type: String,
-        required: true
+        required: [true, 'CPU is required!']
     },
     gpu: {
         type: String,
-        required: true
+        required: [true, 'GPU is required!']
     },
     price: {
         type: Number,
-        required: true
+        required: [true, 'Pricec is required!']
     },
     color: {
         type: String,
-        required: true
+        required: [true, 'Color is required!']
     },
     weight: {
         type: String,
-        required: true
+        required: [true, 'Weight is required!']
     },
     imageUrl: {
         type: String,
-        required: true
+        required: [true, 'Image URL is required!']
     },
     preferList: [{
         type: mongoose.Types.ObjectId,
