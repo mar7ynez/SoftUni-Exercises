@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import * as jwt from "../lib/jwt.js";
 import 'dotenv/config';
 
-const getUser = (filterQuery) => User.findOne(filterQuery);
+export const getUser = (filterQuery) => User.findOne(filterQuery);
 
 const register = async (userData) => {
     const user = await getUser({ email: userData.email });
