@@ -73,7 +73,7 @@ router.get('/:productId/prefer', async (req, res) => {
     }
 });
 
-router.get('/:productId/delete', async (req, res) => {
+router.get('/:productId/delete', isAuth, async (req, res) => {
     try {
         const product = await productService.getOne(req.params.productId).lean();
         const isOwner = req.user?._id == product.owner._id;
@@ -91,7 +91,7 @@ router.get('/:productId/delete', async (req, res) => {
     }
 });
 
-router.get('/:productId/edit', async (req, res) => {
+router.get('/:productId/edit', isAuth, async (req, res) => {
     try {
         const product = await productService.getOne(req.params.productId).lean();
         const isOwner = req.user?._id == product.owner._id;
