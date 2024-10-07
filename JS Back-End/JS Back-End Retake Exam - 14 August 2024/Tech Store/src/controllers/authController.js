@@ -1,6 +1,8 @@
 import express from "express";
 import * as authService from "../services/authService.js"
 import { getErrorMsg } from "../utils/errorUtils.js";
+import { isAuth } from "../middlewares/authMiddleware.js";
+import * as productService from "../services/productService.js";
 
 const router = express.Router();
 
@@ -71,5 +73,13 @@ router.get('/logout', (req, res) => {
     }
 });
 
+router.get('/profile', isAuth, async (req, res) => {
+
+    const ownProducts = await productService.getOwnProducts(req.user._id).lean();
+    const preferredProducts = await productService.getPreferredProducts(req.user._id).lean();
+    const { name, email } = await authService.getUser({ _id: req.user._id });
+
+    res.render('auth/profile', { ownProducts, preferredProducts, name, email });
+});
 
 export { router };
