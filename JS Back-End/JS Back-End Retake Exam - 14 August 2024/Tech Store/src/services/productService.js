@@ -19,3 +19,6 @@ export const hasPrefered = async (userId, productId) => {
 
     return false;
 }
+
+export const getOwnProducts = (userId) => Device.find({ owner: userId }).populate('owner');
+export const getPreferredProducts = (userId) => Device.find({ preferList: { $in: [userId] } });
