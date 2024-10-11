@@ -5,7 +5,7 @@ export const itemTemplate = (item) => html`
 <div class="col-md-4">
     <div class="card text-white bg-primary">
         <div class="card-body">
-            <img src=${item.img} />
+            <img src=${item.imageUrl} />
             <p>${item.description}</p>
             <footer>
                 <p>Price: <span>${item.price} $</span></p>
