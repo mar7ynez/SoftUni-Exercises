@@ -35,7 +35,7 @@ const createTemplate = (onSubmit) => html`<div class="row space-top">
             </div>
             <div class="form-group">
                 <label class="form-control-label" for="new-image">Image</label>
-                <input class="form-control" id="new-image" type="text" name="img">
+                <input class="form-control" id="new-image" type="text" name="imageUrl">
             </div>
             <div class="form-group">
                 <label class="form-control-label" for="new-material">Material (optional)</label>

@@ -36,7 +36,7 @@ const editTemplate = (item, onSubmit) => html`
             </div>
             <div class="form-group">
                 <label class="form-control-label" for="new-image">Image</label>
-                <input class="form-control" id="new-image" type="text" name="img" .value=${item.img}>
+                <input class="form-control" id="new-image" type="text" name="img" .value=${item.imageUrl}>
             </div>
             <div class="form-group">
                 <label class="form-control-label" for="new-material">Material (optional)</label>
