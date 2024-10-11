@@ -1,5 +1,5 @@
 export const settings = {
-    host: ''
+    host: 'http://localhost:3030'
 };
 
 async function request(url, options) {
@@ -68,8 +68,8 @@ export async function login(email, password) {
     return result;
 }
 
-export async function register(email, password) {
-    const result = await post(settings.host + '/users/register', { email, password });
+export async function register(email, password, rePass) {
+    const result = await post(settings.host + '/users/register', { email, password, rePass });
 
     sessionStorage.setItem('email', result.email);
     sessionStorage.setItem('authToken', result.accessToken);
