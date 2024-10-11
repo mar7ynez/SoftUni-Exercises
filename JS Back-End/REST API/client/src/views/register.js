@@ -43,17 +43,17 @@ export async function registerPage(ctx) {
         const formData = new FormData(event.target);
         const email = formData.get('email').trim();
         const password = formData.get('password').trim();
-        const repass = formData.get('rePass').trim();
+        const rePass = formData.get('rePass').trim();
 
-        if (email == '' || password == '' || repass == '') {
-            return ctx.render(registerTemplate(onSubmit, 'All fields are required!', email == '', password == '', repass == ''));
+        if (email == '' || password == '' || rePass == '') {
+            return ctx.render(registerTemplate(onSubmit, 'All fields are required!', email == '', password == '', rePass == ''));
         }
-        if (password != repass) {
+        if (password != rePass) {
             return ctx.render(registerTemplate(onSubmit, 'Passwords don\'t match!', false, true, true));
         }
 
-        await register(email, password);
-        
+        await register(email, password, rePass);
+
         ctx.setUserNav();
         ctx.page.redirect('/');
     }
