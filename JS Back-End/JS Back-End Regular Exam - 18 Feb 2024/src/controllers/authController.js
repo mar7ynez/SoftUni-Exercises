@@ -32,7 +32,7 @@ authController.post('/register', isAuth, async (req, res) => {
         res.redirect('/');
     }
     catch (error) {
-        console.log('Error registering new user!\n', error);
+        res.render('auth/register', { error: getErrorMsg(error) });
     }
 });
 
