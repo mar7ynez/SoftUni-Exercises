@@ -1,14 +1,15 @@
 import { Router } from "express";
 import * as stoneService from "../services/stoneService.js";
-import { isOwner } from "../middlewares/authMiddleware.js";
+import { isAuth, isOwner, ownerGuard } from "../middlewares/authMiddleware.js";
+import { getErrorMsg } from "../utils/getErrorMessage.js";
 
 const stoneController = Router();
 
-stoneController.get('/create', (req, res) => {
+stoneController.get('/create', isAuth, (req, res) => {
     res.render('stone/create');
 });
 
-stoneController.post('/create', async (req, res) => {
+stoneController.post('/create', isAuth, async (req, res) => {
     const stoneData = {
         ...req.body,
         owner: req.user._id
@@ -20,7 +21,7 @@ stoneController.post('/create', async (req, res) => {
         res.redirect('/');
     }
     catch (error) {
-        console.log('Error creating new post!\n', error.message);
+        res.render('stone/create', { stone: stoneData, error: getErrorMsg(error) });
     }
 });
 
@@ -36,33 +37,33 @@ stoneController.get('/:stoneId/details', isOwner, async (req, res) => {
         res.render('stone/details', { stone, isOwner: req.user?.isOwner, liked });
     }
     catch (error) {
-        console.log('Error getting stone data!\n', error);
+        next(error);
     }
 });
 
-stoneController.get('/:stoneId/edit', async (req, res) => {
+stoneController.get('/:stoneId/edit', isAuth, ownerGuard, async (req, res) => {
     try {
         const stone = await stoneService.getOne(req.params.stoneId).lean();
 
         res.render('stone/edit', { stone });
     }
     catch (error) {
-        console.log('Error getting stone data!\n', error);
+        next(error);
     }
 });
 
-stoneController.post('/:stoneId/edit', async (req, res) => {
+stoneController.post('/:stoneId/edit', isAuth, ownerGuard, async (req, res) => {
     try {
-        const updatedStoneData = await stoneService.edit(req.params.stoneId, req.body);
+        await stoneService.edit(req.params.stoneId, req.body);
 
         res.redirect(`/stones/${req.params.stoneId}/details`);
     }
     catch (error) {
-        console.log('Error updating stone data!\n', error);
+        next(error);
     }
 });
 
-stoneController.get('/:stoneId/like', async (req, res) => {
+stoneController.get('/:stoneId/like', isAuth, async (req, res) => {
     const stoneId = req.params.stoneId;
 
     try {
@@ -71,18 +72,18 @@ stoneController.get('/:stoneId/like', async (req, res) => {
         res.redirect(`/stones/${stoneId}/details`);
     }
     catch (error) {
-        console.log('Cannot like this item!\n', error);
+        next(error);
     }
 });
 
-stoneController.get('/:stoneId/delete', async (req, res) => {
+stoneController.get('/:stoneId/delete', ownerGuard, async (req, res) => {
     try {
         await stoneService.remove(req.params.stoneId);
 
         res.redirect('/');
     }
     catch (error) {
-        console.log('Error deleting listed gem!\n', error);
+        next(error);
     }
 });
 
