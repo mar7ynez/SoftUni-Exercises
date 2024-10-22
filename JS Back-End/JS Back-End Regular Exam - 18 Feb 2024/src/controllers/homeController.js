@@ -10,7 +10,7 @@ homeController.get('/', async (req, res) => {
         res.render('home', { stones: lastThreeDocs });
     }
     catch (error) {
-        console.log('Error getting last 3 records!\n', error);
+        next(error);
     }
 });
 
@@ -21,18 +21,20 @@ homeController.get('/dashboard', async (req, res) => {
         res.render('home/dashboard', { stones });
     }
     catch (error) {
-        console.log('Error getting stones!\n', error);
+        next(error);
     }
 });
 
 homeController.get('/search', async (req, res) => {
-    console.log(req.query);
 
-    const stones = await stoneService.getAll(req.query).lean();
+    try {
+        const stones = await stoneService.getAll(req.query).lean();
 
-    console.log(stones)
-
-    res.render('home/search', { stones });
+        res.render('home/search', { stones });
+    }
+    catch (error) {
+        next(error);
+    }
 });
 
 export { homeController };
