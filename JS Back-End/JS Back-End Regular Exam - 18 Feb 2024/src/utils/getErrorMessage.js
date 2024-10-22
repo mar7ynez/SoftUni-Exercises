@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
+import { MongooseError } from "mongoose";
 
 export const getErrorMsg = (error) => {
-    if (error instanceof mongoose.Error) {
+    if (error instanceof MongooseError) {
         return Object.values(error.errors).at(0).message;
     }
 
