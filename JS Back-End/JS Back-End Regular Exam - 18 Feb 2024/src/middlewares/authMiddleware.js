@@ -32,14 +32,41 @@ export const isAuth = (req, res, next) => {
 }
 
 export const isOwner = async (req, res, next) => {
-    const stone = await stoneService.getOne(req.params.stoneId);
+    try {
+        const stone = await stoneService.getStoneById(req.params.stoneId);
 
-    if (!stone) {
-        throw new Error('Error getting stone data!');
+        req.user.isOwner = req.user?._id == stone.owner;
+
+        next();
     }
+    catch (error) {
+        next(error);
+    }
+}
 
-    if (stone.owner == req.user?._id) {
-        req.user.isOwner = true;
+export const ownerGuard = async (req, res, next) => {
+    try {
+        const stone = await stoneService.getStoneById(req.params.stoneId);
+
+        if (stone.owner != req.user?._id) {
+            const error = new Error('Something went wrong!');
+            error.status = 404;
+
+            throw error;
+        }
+
+        req.stoneData = stone
+
+        next();
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const isLogged = (req, res, next) => {
+    if (req.user) {
+        return res.redirect('/404');
     }
 
     next();
