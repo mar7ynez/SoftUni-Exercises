@@ -20,8 +20,8 @@ export const remove = (stoneId) => Stone.findByIdAndDelete(stoneId);
 
 export const hasLiked = (stoneId, userId) => Stone.find({ _id: stoneId, likes: { $in: [userId] } });
 
-const getStoneById = async (stoneId) => {
-    const stone = await stoneService.getOne(stoneId);
+export const getStoneById = async (stoneId) => {
+    const stone = await getOne(stoneId);
 
     if (!stone) {
         const error = new Error('Stone not found!');
