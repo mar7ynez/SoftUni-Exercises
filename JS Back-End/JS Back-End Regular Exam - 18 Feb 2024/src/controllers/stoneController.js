@@ -33,7 +33,6 @@ stoneController.get('/:stoneId/details', isOwner, async (req, res) => {
         const stoneLikes = await stoneService.hasLiked(stoneId, req.user?._id);
         const liked = Boolean(stoneLikes.length);
 
-
         res.render('stone/details', { stone, isOwner: req.user?.isOwner, liked });
     }
     catch (error) {
