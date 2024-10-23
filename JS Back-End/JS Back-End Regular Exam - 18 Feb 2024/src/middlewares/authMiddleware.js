@@ -35,7 +35,9 @@ export const isOwner = async (req, res, next) => {
     try {
         const stone = await stoneService.getStoneById(req.params.stoneId);
 
-        req.user.isOwner = req.user?._id == stone.owner;
+        if (req.user?._id == stone.owner) {
+            req.user.isOwner = true;
+        }
 
         next();
     }
