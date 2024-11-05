@@ -3,6 +3,15 @@ import bcrypt from 'bcrypt';
 import * as jwt from '../lib/jwt.js';
 import 'dotenv/config';
 
+const generateToken = (userData) => {
+    const payload = {
+        _id: userData._id,
+        email: userData.email,
+    }
+
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h' });
+}
+
 export const register = async (newUser) => {
     const alreadyUser = await User.find({ $or: [{ email: newUser.email }, { username: newUser.username }] });;
 
@@ -16,7 +25,11 @@ export const register = async (newUser) => {
 
     newUser.password = await bcrypt.hash(newUser.password, 12);
 
-    return User.create(newUser);
+    await User.create(newUser);
+
+    const token = generateToken(alreadyUser);
+
+    return token;
 }
 
 export const login = async (loginData) => {
@@ -32,10 +45,7 @@ export const login = async (loginData) => {
         throw new Error('Invalid email or password!');
     }
 
-    const payload = {
-        _id: alreadyUser._id,
-        email: alreadyUser.email,
-    }
+    const token = generateToken(alreadyUser);
 
-    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h' });
+    return token;
 }
