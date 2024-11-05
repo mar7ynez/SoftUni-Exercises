@@ -6,22 +6,24 @@ import { isAuth, isLogged } from '../middlewares/authMiddlewares.js';
 const authController = Router();
 
 authController.get('/register', isLogged, (req, res) => {
-    res.render('auth/register');
+    res.render('auth/register', { title: 'Register' });
 });
 
 authController.post('/register', async (req, res) => {
     try {
-        await authService.register(req.body);
+        const token = await authService.register(req.body);
 
-        res.render('home/home')
-    } catch (error) {
+        res.cookie('auth', token, { httpOnly: true });
+        res.redirect('/');
+    }
+    catch (error) {
         res.render('auth/register', { userData: req.body, error: getErrorMsg(error) });
 
     }
 });
 
 authController.get('/login', isLogged, (req, res) => {
-    res.render('auth/login');
+    res.render('auth/login', { title: 'Login' });
 });
 
 authController.post('/login', async (req, res) => {
@@ -32,7 +34,7 @@ authController.post('/login', async (req, res) => {
         res.redirect('/');
     }
     catch (error) {
-        res.render('auth/login', { error: getErrorMsg(error) });
+        res.render('auth/login', { userData: req.body, error: getErrorMsg(error) });
     }
 });
 
