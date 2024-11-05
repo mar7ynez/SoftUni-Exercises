@@ -6,7 +6,7 @@ import { getErrorMsg } from "../utils/getErrorMsg.js";
 const planetsController = Router();
 
 planetsController.get('/create', isAuth, (req, res) => {
-    res.render('planets/create');
+    res.render('planets/create', { title: 'Create' });
 });
 
 planetsController.post('/create', isAuth, async (req, res) => {
@@ -30,7 +30,7 @@ planetsController.get('/:planetId/details', isOwner, async (req, res, next) => {
 
         const isLiked = Boolean(liked.length);
 
-        res.render('planets/details', { planet, isOwner: req.user?.isOwner, isLiked });
+        res.render('planets/details', { planet, isOwner: req.user?.isOwner, isLiked, title: 'Details' });
     } catch (error) {
         next(error);
     }
@@ -65,7 +65,7 @@ planetsController.get('/:planetId/delete', ownerGuard, async (req, res, next) =>
 planetsController.get('/:planetId/edit', ownerGuard, async (req, res, next) => {
     try {
         const planet = await planetServices.getOne(req.params.planetId).lean();
-        res.render('planets/edit', { planet });
+        res.render('planets/edit', { planet, title: 'Edit' });
     } catch (error) {
         next(error);
     }
