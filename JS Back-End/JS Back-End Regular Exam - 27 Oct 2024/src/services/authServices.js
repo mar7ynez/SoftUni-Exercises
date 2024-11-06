@@ -1,16 +1,7 @@
 import { User } from "../models/User.js";
 import bcrypt from 'bcrypt';
-import * as jwt from '../lib/jwt.js';
+import { generateToken } from "../utils/generateToken.js";
 import 'dotenv/config';
-
-const generateToken = (userData) => {
-    const payload = {
-        _id: userData._id,
-        email: userData.email,
-    }
-
-    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h' });
-}
 
 export const register = async (newUser) => {
     const alreadyUser = await User.find({ $or: [{ email: newUser.email }, { username: newUser.username }] });;
