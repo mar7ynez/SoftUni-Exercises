@@ -1,0 +1,17 @@
+tr>td {
+    font-size: small;
+    letter-spacing: 0.35px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border: solid grey;
+    border-width: thin;
+    padding: 3px;
+}
+
+thead>tr>td {
+    font-weight: bold;
+    background-color: #B0DEEC;
+    padding-right: 28px;
+    padding-left: 28px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}

@@ -1,0 +1,22 @@
+<h1>Cat Shelter</h1>
+<form method="GET">
+    <input name="search" type="text">
+    <button type="submit">Search</button>
+</form>
+
+<section class="cats">
+    <ul>
+        {{#each cats}}
+        <li>
+            <img src="{{this.imageUrl}}" alt="{{this.name}}">
+            <h3>{{this.name}}</h3>
+            <p><span>Breed: </span>{{this.breed}}</p>
+            <p><span>Description: </span>{{this.description}}</p>
+            <ul class="buttons">
+                <li class="btn edit"><a href="/cats/{{this._id}}/edit">Change Info</a></li>
+                <li class="btn delete"><a href="/cats/{{this._id}}/shelter">New Home</a></li>
+            </ul>
+        </li>
+        {{/each}}
+    </ul>
+</section>
