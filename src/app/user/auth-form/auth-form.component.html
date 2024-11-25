@@ -1,0 +1,33 @@
+<form class="register-form">
+    <div class="fields-wrapper">
+        <h2>{{isLoginMode ? 'Login' : 'Register'}}</h2>
+        @if (!isLoginMode){
+        <label for="email">Email</label>
+        <input type="text" name="email">
+        <label for="username">Username</label>
+        <input type="text" name="username">
+        <label for="password">Password</label>
+        <input type="password" name="password">
+        <label for="rePass">Confirm Password</label>
+        <input type="password" name="rePass">
+        } @else {
+        <label for="email">Email</label>
+        <input type="text" name="email">
+        <label for="password">Password</label>
+        <input type="password" name="password">
+        }
+        <button type="button">{{isLoginMode ? 'Log in' : 'Register'}}</button>
+
+        @if (!isLoginMode) {
+        <div class="no-account">
+            <p>Already have an account?</p>
+            <a routerLink="/login">Login</a>
+        </div>
+        } @else {
+        <div class="no-account">
+            <p>Don't have an account?</p>
+            <a routerLink="/register">Register</a>
+        </div>
+        }
+    </div>
+</form>
