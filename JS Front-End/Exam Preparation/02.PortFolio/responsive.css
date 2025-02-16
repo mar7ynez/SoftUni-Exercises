@@ -1,0 +1,37 @@
+@media(max-width: 600px) {
+
+    .site-header>i {
+        left: 0;
+        width: 100%;
+    }
+
+    .gallery {
+        text-align: center;
+    }
+
+    li {
+        display: none;
+    }
+
+    .checkbtn {
+        display: block;
+    }
+
+    .about {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .about-header {
+        padding-top: 200px;
+        padding-right: 20px;
+        margin-bottom: 200px;
+        display: block;
+    }
+
+    .logo {
+        position: absolute;
+        right: 30px;
+    }
+}
