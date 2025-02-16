@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css');
+
+body {
+    margin: 0;
+    background-color: #F6F6F6;
+    font-family: "Source Sans 3", serif;
+}
+
+.wrapper {
+    display: flex;
+    max-height: 100dvh;
+    max-width: 1200px;
+    width: 100%;
+    margin: 250px 500px;
+    overflow: hidden;
+}
+
+main {
+    width: 700px;
+}
+
+h2 {
+    color: #585858;
+    padding-bottom: 10px;
+    font-size: 16px;
+    font-weight: 900;
+    word-spacing: 5px;
+    letter-spacing: 3px;
+}
+
+form {
+    max-width: 650px;
+}
+
+input,
+textarea {
+    padding: 10px 0px;
+    margin-bottom: 20px;
+    background: transparent;
+    border: none;
+    width: 100%;
+    border-bottom: 1px solid #CBCBCB;
+}
+
+.flex-row {
+    display: flex;
+    gap: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #585858;
+    color: white;
+    letter-spacing: 2px;
+    font-family: "Source Sans 3", serif;
+    font-weight: bold;
+    font-size: 12px;
+    border: none;
+    border-radius: 2px;
+}
+
+p {
+    margin-top: 50px;
+    font-size: 16px;
+    font-weight: lighter;
+}
+
+span {
+    padding: 0 20px;
+}
+
+a {
+    font-weight: 500;
+    color: #585858;
+}
+
+aside {
+    width: 100%;
+    max-width: 500px;
+}
+
+.socials {
+    max-width: 300px;
+}
+
+
+.socials>a {
+    text-decoration: none;
+    font-size: 30px;
+    border: 1px solid #CBCBCB;
+    border-radius: 3px;
+    box-shadow: 1px 1px 3px 1px;
+    display: inline-flex;
+    margin: 5px;
+    max-width: 60px;
+    width: 100%;
+}
+
+i {
+    margin: 5px 15px
+}
