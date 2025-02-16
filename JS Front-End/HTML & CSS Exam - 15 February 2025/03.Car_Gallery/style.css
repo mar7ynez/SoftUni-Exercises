@@ -1,0 +1,212 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,400italic,600");
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Source Sans Pro';
+}
+
+.wrapper {
+    width: 100%;
+}
+
+nav {
+    background: linear-gradient(90deg, rgb(252, 101, 119) 0%, rgb(252, 101, 109) 24%, rgb(252, 180, 172) 45%, rgb(255, 182, 160) 83%, rgba(243, 179, 156, 1) 100%);
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+nav>a {
+    padding: 20px 70px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #FEFFFE;
+    letter-spacing: 2px;
+}
+
+nav>a:nth-child(3) {
+    border-bottom: 1px solid #FEFFFE;
+    border-right: 1px solid #FEFFFE;
+    border-left: 1px solid #FEFFFE;
+    background: rgb(245, 161, 151);
+    background: linear-gradient(90deg, rgba(245, 160, 151, 0) 0%, rgba(245, 213, 204, 0.418) 47%, rgba(243, 179, 156, 0.63) 100%);
+    border-radius: 0px 0px 10px 10px;
+    font-weight: bold;
+}
+
+.car-gallery {
+    background: linear-gradient(90deg, rgb(252, 101, 119) 0%, rgb(252, 101, 109) 24%, rgb(252, 180, 172) 45%, rgb(255, 182, 160) 83%, rgba(243, 179, 156, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 70px;
+}
+
+.car-gallery>h1 {
+    color: #FEFFFE;
+    padding-top: 50px;
+    font-weight: 300;
+    font-size: 40px;
+}
+
+.car-gallery>p {
+    color: #FEFFFE;
+    font-size: 20px;
+    font-weight: 300;
+    padding-bottom: 30px;
+}
+
+.car-gallery>button {
+    background-color: transparent;
+    padding: 18px 50px;
+    border-radius: 8px;
+    border: 2px solid #fefffe85;
+    color: #FEFFFE;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.car-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+    padding-bottom: 50px;
+}
+
+.fastest {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin-top: 100px;
+    /* gap: 40px; */
+}
+
+.fastest>img {
+    width: 500px;
+}
+
+.fastest>h2,
+.fastest {
+    font-weight: 300;
+}
+
+.fastest>p {
+    padding-bottom: 30px;
+}
+
+.fastest>button {
+    border: 1px solid rgba(128, 128, 128, 0.61);
+    color: rgba(128, 128, 128, 0.973);
+    border-radius: 5px;
+    background-color: transparent;
+    align-self: center;
+    padding: 15px 30px;
+    cursor: pointer;
+}
+
+.signIn {
+    padding: 100px;
+    background-image: url('/03.Car_Gallery/images/promo.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.promo-wrapper {
+    font-weight: 300;
+    font-size: 20px;
+    color: white;
+    background-color: #fefffe11;
+    padding: 10px 50px;
+    border: 1px solid rgba(255, 255, 255, 0.288);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.promo-wrapper>button {
+    background-color: #FFFFFF;
+    color: #739096;
+    border: 1px solid rgba(128, 128, 128, 0);
+    border-radius: 5px;
+    align-self: center;
+    padding: 15px 30px;
+    cursor: pointer;
+
+}
+
+.weird-cars {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px
+}
+
+.weird-img-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: red;
+    gap: 40px;
+    border: 1px solid rgba(87, 87, 87, 0.418);
+    background-color: #c0c0c03a;
+}
+
+.weird-img-wrapper>img {
+    width: 300px;
+}
+
+.weird-cars>h1,
+footer>div>h1 {
+    color: #637074;
+    font-weight: 300;
+    font-size: 32px;
+}
+
+.weird-cars>button {
+    font-size: 14px;
+    background-color: transparent;
+    color: rgba(105, 104, 104, 0.692);
+    border: 1px solid rgba(105, 104, 104, 0.418);
+    border-radius: 5px;
+    padding: 15px 30px;
+    cursor: pointer;
+}
+
+footer {
+    padding-top: 50px;
+    margin-top: 150px;
+    border: 1px solid rgba(87, 87, 87, 0.418);
+    background-color: #c0c0c03a;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px
+}
+
+footer>div>h2 {
+    font-weight: 300;
+    color: red;
+}
+
+footer>p {
+    color: #637074;
+    font-weight: 200;
+    font-size: 20px;
+    padding: 10px 350px;
+    border-top: 2px solid rgba(87, 87, 87, 0.116);
+}
