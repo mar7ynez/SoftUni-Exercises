@@ -1,0 +1,106 @@
+@media(max-width: 600px) {
+    .nav_menu {
+        display: none;
+    }
+
+    .nav-burger-menu {
+        display: block;
+    }
+
+    .welcome {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .welcome>div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .welcome>div>p {
+        text-align: center;
+    }
+
+    .welcome>div>button {
+        width: 80%;
+    }
+
+    .services {
+        padding-left: 2%;
+        padding-right: 2%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .services>div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .services>div>p {
+        width: 100%;
+        text-align: center;
+    }
+
+    footer {
+        padding: 20px 0;
+    }
+
+    footer>ul {
+        display: grid;
+        gap: 0;
+        margin: 0;
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        grid-template-columns: repeat(2, minmax(200px, 1fr));
+        grid-template-rows: auto auto;
+    }
+
+    footer>ul li:nth-child(1)>h2 {
+        text-align: center;
+    }
+
+    footer>ul li:nth-child(1)>p {
+        text-align: center;
+        padding: 0;
+        width: 100%;
+    }
+
+    footer>ul>li:nth-child(1) {
+        grid-column: 1 / -1;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    footer>ul>li:nth-child(2),
+    footer>ul>li:nth-child(3) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .inner_list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .inner_list a {
+        text-align: center;
+        display: block;
+    }
+}
